@@ -1,0 +1,78 @@
+import React, { useState, useEffect } from 'react'
+import { InputBase, List, ListItem, Box, styled } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+// importing icon from mui
+import SearchIcon from '@mui/icons-material/Search';
+
+const SearchContainer = styled(Box)`
+  border-radius: 2px;
+  margin-left: 10px;
+  width: 38%;
+  background-color: #fff;
+  display: flex;
+`;
+const SearchIconWrapper = styled(Box)`
+  margin-left: auto;
+  padding: 5px;
+  display: flex;
+  color: blue;
+`;
+const InputSearchBase = styled(InputBase)`
+  font-size: unset;
+  width: 100%;
+  padding-left: 20px;
+`;
+
+const ListWrapper = styled(List)`
+  position: absolute;
+  color: #000;
+  background: #FFFFFF;
+  margin-top: 36px;
+`;
+
+// function starts
+const Search = () => {
+
+  const [text, setText] = useState('');
+  const [productData, setProductData] = useState([]);
+  const items =  useSelector((state) => state.allCart.item);
+  useEffect(() => {
+    setProductData(items);
+  }, [items]);
+
+  const getText = (text) => {
+    setText(text);
+  }
+
+  return (
+    <SearchContainer>
+      <InputSearchBase
+        placeholder="Search for products, brands and more"
+        onChange={(e) => getText(e.target.value)}
+        value={text}
+
+      />
+      <SearchIconWrapper>
+        <SearchIcon />
+      </SearchIconWrapper>
+      {
+        text && <ListWrapper>
+          {
+            productData.filter(product => product.title.toLowerCase().includes(text.toLowerCase())).map(product => (
+              <ListItem>
+                <Link to={`products/${product.id}`} onClick={()=>setText('')}>
+                  {product.title}
+                </Link>
+              </ListItem>
+            ))
+          }
+        </ListWrapper>
+      }
+
+    </SearchContainer>
+  )
+}
+
+export default Search;
