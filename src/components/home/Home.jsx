@@ -18,8 +18,8 @@ const Home = () => {
       <Component>
         <Banner />
         <MidSlides title="Best of Electronics" timer={true} />
-        <Slide title="Top Deals on Fashion" timer={false} utoPlay={false} filterText = {"clothing"} />
-        <Slide title="Season's Top Pick" timer={false} utoPlay={false}  />
+        <Slide title="Top Deals on Fashion" timer={false} autoPlay={false} filterText = {"clothing"} />
+        <Slide title="Season's Top Pick" timer={false} autoPlay={false}  />
         
       </Component>
     </>

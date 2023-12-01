@@ -25,18 +25,18 @@ const responsive = {
 const Component = styled(Box)`
     margin-top: 10px;
     background:#fff;
-`
+`;
 const Deal = styled(Box)`
     padding: 15px 20px;
     display:flex;
-`
+`;
 const Timer = styled(Box)`
     display:flex;
     margin-left:10px;
     align-items:center;
     justify-content:center;
     color:#7f7f7f;
-`
+`;
 const DealText = styled(Typography)`
     font-size: 22px;
     font-weight: 600;
