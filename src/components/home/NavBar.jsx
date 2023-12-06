@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, styled, Typography } from '@mui/material'
+import { Box, styled, Typography } from '@mui/material';
 import { navData } from '../../constants/data';
 
 const Component = styled(Box)(
@@ -19,6 +19,7 @@ const Component = styled(Box)(
 const Container = styled(Box)`
     padding: 12px 8px;
     text-align: center;
+    position: relative;
 `;
 const Text = styled(Typography)`
     font-size: 14px;
@@ -26,17 +27,9 @@ const Text = styled(Typography)`
     font-family: inherit;
     cursor: pointer;
 `;
+
 // function starts
 const NavBar = (event) => {
-
-    /* const [tempCategoryProducts, setProducts] = useState([]);
-
-    const callApi = async (category) => {
-      const response = await fetch(`https://api.escuelajs.co/api/v1/products?category/${category}`) *//* (`https://fakestoreapi.com/products/category/${category}`) */
-      /* const data = await response.json();
-      console.log(data);
-      setProducts(data);
-    }*/
 
     const handleItemClick = (category) => {
         console.log('Clicked Text:', category);
@@ -45,9 +38,13 @@ const NavBar = (event) => {
     
     return (
       <Component>
-        {navData.map((data) => (
-          <Container key={data.text} onClick={() => handleItemClick(data.text)}>
-            <Link style={{textDecoration: 'none', color: 'inherit'}} to={`/products/category/${encodeURIComponent(data.text)}`}>
+        {navData.map((data, index) => (
+          <Container key={data.text} 
+            onClick={() => handleItemClick(data.text)}
+            >
+            <Link 
+              style={{textDecoration: 'none', color: 'inherit'}} 
+              to={`/products/category/${encodeURIComponent(data.text)}`}>
             <img src={data.url} alt="nav" style={{ width: 64, height: 64 }} />
             <Text key="{txt}">{data.text}</Text>
             </Link>

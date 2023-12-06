@@ -40,9 +40,6 @@ const DetailView = () => {
         setItemData(items[fetchId.id-1]);
     }, [fetchId]);
 
-    
-    
-
     return (
         <Component>
             <Grid container>

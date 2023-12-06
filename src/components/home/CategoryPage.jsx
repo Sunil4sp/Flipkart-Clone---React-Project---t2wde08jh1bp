@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import './content.json';
+/* import './content.json'; */
 import '../../App.css';
 
 const validCategories = [
@@ -25,13 +25,11 @@ const validCategories = [
   "motorcycle",
   "lighting"
 ];
-/* ['electronics', 'jewelry', "men's clothing", "women's clothing"]; */
-/* const fashion = ["men's clothing","women's clothing","Fashion"]; */
 
 const CategoryPage = () => {
   const { category } = useParams();
   const lowercaseCategory = category.toLowerCase();
-  let [tempCategoryProducts, setProducts] = useState([]);
+  let [tempCategoryProducts, setProducts] = useState({});
 
   /* useEffect(() => {
     try{
@@ -63,10 +61,18 @@ const CategoryPage = () => {
   }, [tempCategoryProducts]); */
 
   const callApi = async (lowercaseCategory) => {
-    const response = await fetch /* (`https://dummyjson.com/products/category/${lowercaseCategory}`); */ (`https://fakestoreapi.com/products/category/${lowercaseCategory}`);
+    try{
+    const response = await fetch (`https://dummyjson.com/products/category/${lowercaseCategory}`); /* (`https://fakestoreapi.com/products/category/${lowercaseCategory}`); */
     const data = await response.json();
-    setProducts(data);
-    console.log(data, tempCategoryProducts);
+    if (data && data.products && Array.isArray(data.products)) {
+      setProducts(data.products);
+      /* console.log(data.products); */
+      } else{
+        console.error('Invalid data format:', data);
+      }
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   useEffect(() => {
@@ -75,17 +81,16 @@ const CategoryPage = () => {
 
   return (
     <div>
-      <h2 style={{padding: '10px 20px'}}>{category} Products</h2>
-      {/* {lowercaseCategory.map((item) => ( */}
-
-      {tempCategoryProducts.map((item) => (
+      <h2 style={{padding: '20px 50px'}}>{category} Products</h2>
+      {Array.isArray(tempCategoryProducts) ? (
+      tempCategoryProducts.map((item) => (
         <div key={item.id}>
-          <p style={{padding: '15px 25px', fontWeight: '700'}}>{item.title}</p>
+          <p style={{padding: '15px 60px', fontWeight: '700'}}>{item.title}</p>
           <div className="col-3" key={item.id}>
                 <div className="card">
                     <div className="imagDiv">
                         <img
-                            src={item.image} /* {item.thumbnail} */
+                            src=/*{item.image}*/ {item.thumbnail}
                             className="card-img-top product-image-list"
                             alt="..."
                         />
@@ -108,8 +113,11 @@ const CategoryPage = () => {
                 </div>
               </div>
         </div>
-      ))}
-    </div>
+      ))
+      ):(
+        <p className='loading-api'>Loading...</p>
+      )}
+    </div>  
   );
 };
 

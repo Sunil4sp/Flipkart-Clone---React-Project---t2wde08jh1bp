@@ -1,6 +1,6 @@
-import React from 'react'
-import NavBar from './NavBar'
-import Banner from './Banner'
+import React from 'react';
+import NavBar from './NavBar';
+import Banner from './Banner';
 import Slide from './Slide';
 import { Box, styled } from '@mui/material';
 import MidSlides from './MidSlides';
@@ -27,4 +27,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;
