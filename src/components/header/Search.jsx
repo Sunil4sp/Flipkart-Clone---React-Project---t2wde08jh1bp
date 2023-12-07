@@ -7,9 +7,9 @@ import { useSelector } from 'react-redux';
 import SearchIcon from '@mui/icons-material/Search';
 
 const SearchContainer = styled(Box)`
-  border-radius: 2px;
-  margin-left: 10px;
-  width: 38%;
+  border-radius: 5px;
+  margin-left: 35px;
+  width: 40%;
   background-color: #fff;
   display: flex;
 `;
@@ -48,21 +48,23 @@ const Search = () => {
 
   return (
     <SearchContainer>
+
+      <SearchIconWrapper>
+        <SearchIcon />
+      </SearchIconWrapper>
+      
       <InputSearchBase
         placeholder="Search for products, brands and more"
         onChange={(e) => getText(e.target.value)}
         value={text}
-
       />
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
+      
       {
         text && <ListWrapper>
           {
             productData.filter(product => product.title.toLowerCase().includes(text.toLowerCase())).map(product => (
               <ListItem>
-                <Link to={`products/${product.id}`} onClick={()=>setText('')}>
+                <Link to={`products/${product.id}`} style={{ textDecoration: 'none', color: 'initial' }} onClick={()=>setText('')}>
                   {product.title}
                 </Link>
               </ListItem>

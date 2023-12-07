@@ -21,7 +21,7 @@ const StyleHeader = styled(AppBar)`
 
 //changed Box to Link for routing
 const Component = styled(Link)`
-  margin-left: 12%;
+  margin-left: 5%;
   line-height: 0;
   text-decoration: none;
   color: inherit;

@@ -52,7 +52,7 @@ const CustomButton = () => {
   
   //==================localStrorage
   const [accountPresent, setAccountPresent] = useState(false);
-  const localUserName = localStorage.getItem('signup')
+  const localUserName = localStorage.getItem('signup');
   
   const [open, setOpen] = useState(false);
 
