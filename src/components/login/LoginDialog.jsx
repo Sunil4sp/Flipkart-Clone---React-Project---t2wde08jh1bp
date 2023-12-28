@@ -28,7 +28,7 @@ const Image = styled(Box)`
   }
 `;
 const Wrapper = styled(Box)`
-  padding: 25px 35px;
+  padding: 10px 35px;
   display: flex;
   flex: 1;
   overflow: auto;
@@ -36,7 +36,7 @@ const Wrapper = styled(Box)`
   & > div,
   & > button,
   & > p {
-    margin-top: 20px;
+    margin-top: 15px;
   }
 `;
 const LoginButton = styled(Button)`
@@ -133,7 +133,7 @@ const LoginDialog = (props) => {
   const handleLogin = () => {
     if (
       loginEmail === localStorage.getItem('email') && loginPassword === localStorage.getItem('password')) {
-      alert("Welcome back🙏, LogIn successfully");
+      alert("Welcome back🙏, Logged In successfully");
       localStorage.setItem("signup", localStorage.getItem("name"));
       props.setOpen(false);
       props.setAccountPresent(true);

@@ -17,10 +17,9 @@ const Home = () => {
       <NavBar />
       <Component>
         <Banner />
-        <MidSlides title="Best of Electronics" timer={true} />
-        <Slide title="Top Deals on Fashion" timer={false} autoPlay={false} filterText = {"clothing"} />
+        <MidSlides title="Best of Smartphones" timer={true} />
+        <Slide title="Top Deals on Laptops" timer={false} autoPlay={false} filterText = {"laptops"} />
         <Slide title="Season's Top Pick" timer={false} autoPlay={false}  />
-        
       </Component>
     </>
     

@@ -4,7 +4,7 @@ import Slide from './Slide'
 
 const Component = styled(Box)`
     display: flex;
-`
+`;
 
 const LeftComponent = styled(Box)(({ theme }) => ({
     width: '83%',
@@ -35,11 +35,11 @@ const MidSlides = (props) => {
               <Slide
                   title={props.title}
                   timer={props.timer}
-                  filterText = {"electronics"}
+                  filterText = {"smartphones"}
               />
           </LeftComponent>
           <RightComponent>
-              <img src={adURL} style={{ width: 230 }} />
+              <img src={adURL} style={{ width: 200, height: 280 }} alt='' />
           </RightComponent>
       </Component>
   )

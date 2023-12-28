@@ -94,7 +94,7 @@ const Header = () => {
         </Drawer>
 
         <Component to="/">
-          <img src={logoURL} style={{ width: 75 }} />
+          <img src={logoURL} style={{ width: 75 }} alt=""/>
           <Box component="span" style={{ display: "flex" }}>
             <SubHeading>
               Explore&nbsp;

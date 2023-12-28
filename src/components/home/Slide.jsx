@@ -24,18 +24,16 @@ const responsive = {
 
 const Component = styled(Box)`
     margin-top: 10px;
-    background:#fff;
+    background: #fff;
 `;
 const Deal = styled(Box)`
     padding: 15px 20px;
-    display:flex;
+    display: flex;
 `;
 const Timer = styled(Box)`
-    display:flex;
-    margin-left:10px;
-    align-items:center;
-    justify-content:center;
-    color:#7f7f7f;
+    &:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+    }
 `;
 const DealText = styled(Typography)`
     font-size: 22px;
@@ -53,14 +51,14 @@ const ViewAllButton = styled(Button)`
 `;
 
 const Image = styled('img')({
-    width: 'auto',
-    height: 150
+    width: '160px',
+    height: '120px',
 })
 
 const Text = styled(Typography)`
-    font-size: 14px;
+    font-size: 13px;
     margin-top: 5px
-`
+`;
 
 // //=============================================================== function starts===================================================
 
@@ -69,13 +67,13 @@ const Slide = (props) => {
     let items = useSelector((state) => state.allCart.item);
     
     if (props.filterText) {
-        if (props.filterText === "electronics"){
+        if (props.filterText === "smartphones"){
             let test = items.filter((item) => {
                 return item.category.toLowerCase().includes(props.filterText.toLowerCase())
             })
             items = [...test]
         }
-        if (props.filterText === "clothing"){
+        if (props.filterText === "laptops"){
             let test = items.filter((item) => {
                 return item.category.toLowerCase().includes(props.filterText.toLowerCase())
             })
@@ -101,21 +99,19 @@ const Slide = (props) => {
                 containerClass="carousel-container"
                 dotListClass="custom-dot-list-style"
                 itemClass="carousel-item-padding-40-px"
-
             >
                 {
                     items.map(item => (
                         <Link to={`products/${item.id}`} style={{ textDecoration: 'none' }} key="{slide}" >
-                            <Box textAlign='center' style={{ padding: '25px 15px' }}>
-                                <Image src={item.image} alt="banner" />
-                                <Text style={{ fontWeight: 600, color: '#212121' }}>{item.title}</Text>
-                                <Text style={{ color: 'green' }}>$ {item.price} only</Text>
-                                <Text style={{}}>{item.category}</Text>
-                            </Box>
+                            <Timer textAlign='center' style={{ padding: '25px 10px' }} >
+                                <Image src=/* {item.image} */{item.thumbnail} alt="banner" />
+                                <Text style={{ /* fontWeight: 600, */ color: '#212121' }}>{item.title}</Text>
+                                <Text style={{ /* color: 'green' */ color: 'black', fontWeight: 600, }}>$ {item.price} only</Text>
+                                {/* <Text style={{}}>{item.category}</Text> */}
+                            </Timer>
                         </Link>
                     ))
                 }
-
             </Carousel>
         </Component>
     )

@@ -5,6 +5,7 @@ import '../../App.css';
 const CategoryPage = () => {
   const { category } = useParams();
   const lowercaseCategory = category.toLowerCase();
+
   let [tempCategoryProducts, setProducts] = useState({});
 
   /* useEffect(() => {
@@ -54,6 +55,7 @@ const CategoryPage = () => {
   useEffect(() => {
     callApi(lowercaseCategory);
   }, [lowercaseCategory]);
+
 
   return (
     <div>

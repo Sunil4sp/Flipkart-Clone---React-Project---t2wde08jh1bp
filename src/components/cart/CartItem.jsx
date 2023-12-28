@@ -62,7 +62,7 @@ const CartItem = ({ item, totalQuantity, totalprice }) => {
     return (
         <Component>
             <LeftComponent>
-                <img src={item.image} style={{ height: 110, width: 110 }} />
+                <img src={item.thumbnail} style={{ height: 110, width: 110 }} alt=''/>
                 
                 <ButtonComponent>
                     <StyledButton onClick={() => dispatch(decreaseItemQuantity(item.id))}>-</StyledButton>
@@ -73,15 +73,15 @@ const CartItem = ({ item, totalQuantity, totalprice }) => {
             </LeftComponent>
             <Box style={{ margin: 20 }}>
                 <Typography>{item.title}</Typography>
-                <SmallText>Seller:RetailNet
-                    <span><img src={fassured} style={{ width: 50, marginLeft: 10 }} /></span>
+                <SmallText>Seller: RetailNet
+                    <span><img src={fassured} style={{ width: 50, marginLeft: 10 }} alt=''/></span>
                 </SmallText>
                 <Typography style={{ margin: '20px 0' }}>
                     <Cost component="span">${item.price}</Cost>&nbsp;&nbsp;&nbsp;
                     <MRP component="span"><strike>${item.price}</strike></MRP>&nbsp;&nbsp;&nbsp;
                     <Discount component="span">{item.price} off</Discount>
                 </Typography>
-                <Box>{item.quantity}</Box>
+                <Box>{item.totalQuantity}</Box>
                 <Remove onClick={() => dispatch(removeItem(item.id))}>Remove</Remove>
             </Box>
         </Component>

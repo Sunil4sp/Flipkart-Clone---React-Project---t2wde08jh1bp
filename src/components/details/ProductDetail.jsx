@@ -38,12 +38,12 @@ const ProductDetail = (props) => {
       <Typography>{props.itemData.title}</Typography>
       <Typography style={{ marginTop: 5, color: '#878787', fontSize: 14 }}>
         28 Ratings & 1 Reviews
-        <Box component="span"><img src={fassured} style={{ width: 77, marginLeft: 20 }} /></Box>
+        <Box component="span"><img src={fassured} style={{ width: 77, marginLeft: 20 }} alt=''/></Box>
       </Typography>
       <Typography>
         <Box style={{ fontSize: 28 }}>${props.itemData.price}</Box>&nbsp;&nbsp;&nbsp;
-        <Box style={{ color: '#878787' }}><strike>${props.itemData.price}</strike></Box>&nbsp;&nbsp;&nbsp;
-        <Box style={{ color: '#388E3C' }}>{props.itemData.price} off</Box>
+        <Box style={{ color: '#878787' }}><strike>${props.itemData.price - 50}</strike></Box>&nbsp;&nbsp;&nbsp;
+        <Box style={{ color: '#388E3C' }}>{50} off</Box>
       </Typography>
 
       <Typography>Available offers</Typography>
@@ -74,7 +74,7 @@ const ProductDetail = (props) => {
           </ColumnText>
           <ColumnText>
             <TableCell colSpan={2}>
-              <img src={adURL} style={{ width: 390 }} />
+              <img src={adURL} style={{ width: 390 }} alt='' />
             </TableCell>
           </ColumnText>
           <ColumnText>

@@ -47,7 +47,13 @@ const Cart = () => {
     const { cart, totalPrice, totalQuantity } = useSelector((state) => state.allCart);
     const navigate = useNavigate();
     const goToPlaceOrder = () => {
-        navigate('/shipping');
+        let username = localStorage.getItem("username");
+        console.log(username);
+        if(username !== ''){
+            navigate('/shipping');
+        } else{
+            navigate('/loginDialog');
+        }
     };
     return (
         <>
