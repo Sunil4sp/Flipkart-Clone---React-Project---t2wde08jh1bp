@@ -1,4 +1,3 @@
-
 import { Card, Box, ButtonGroup, Typography, Button, styled } from '@mui/material';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -48,13 +47,19 @@ const StyledButton = styled(Button)`
     border-radius: 50%;
 `;
 
-const CartItem = ({ item, totalQuantity, totalprice }) => {
+const CartItem = ({ item, totalQuantity, totalprice, quantity }) => {
 
     const { cart } = useSelector((state) => state.allCart);
 
     useEffect(() => {
         localStorage.setItem("shoppingCart", JSON.stringify(cart));
     }, [cart])
+
+    console.log("Item:", item);
+    console.log("Quantity:", quantity);
+    console.log("Total Price:", totalprice);
+    console.log("Total Quantity:", totalQuantity);
+
 
     const fassured = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png';
 

@@ -44,6 +44,8 @@ const ActionItem = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  /* console.log(props.itemData.thumbnail); */
+
   const goToCart = () => {
     navigate('/cart');
   };

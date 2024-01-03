@@ -1,6 +1,6 @@
 import { Box, Typography, Button, Grid, styled } from '@mui/material';
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react'
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CartItem from './CartItem';
 import EmptyCart from './EmptyCart';
@@ -49,10 +49,10 @@ const Cart = () => {
     const goToPlaceOrder = () => {
         let username = localStorage.getItem("username");
         console.log(username);
-        if(username !== ''){
-            navigate('/shipping');
+        if(username === ''){
+            navigate('/login');
         } else{
-            navigate('/loginDialog');
+            navigate('/shipping');
         }
     };
     return (
@@ -66,9 +66,9 @@ const Cart = () => {
                         </Header>
                         <div>
                             {
-                                cart.map(item => (
+                                cart.map((item, index) => (
 
-                                    <CartItem item={item} totalPrice={totalPrice} totalQuantity={totalQuantity} />
+                                    <CartItem key={index} item={item} totalPrice={totalPrice} totalQuantity={totalQuantity} />
 
                                 ))
                             }

@@ -37,7 +37,7 @@ const DetailView = () => {
 
     const items = useSelector((state) => state.allCart.item);
     useEffect(() => {
-        setItemData(items[fetchId.id-1]);
+        setItemData(items[fetchId.id]);
     }, [fetchId]);
 
     return (

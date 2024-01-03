@@ -63,7 +63,7 @@ const CategoryPage = () => {
       {Array.isArray(tempCategoryProducts) ? (
       tempCategoryProducts.map((item) => (
         <div key={item.id}>
-          <p style={{padding: '15px 60px', fontWeight: '700'}}>{item.title}</p>
+          <span style={{padding: '15px 60px', fontWeight: '700'}}>{item.title}</span>
           <div className="col-3" key={item.id}>
                 <div className="card">
                     <div className="imagDiv">
@@ -77,9 +77,9 @@ const CategoryPage = () => {
                     <h5 className="product-title-list">
                       {item.title}
                     </h5>
-                    <p className="card-text product-description-list">
+                    <span className="card-text product-description-list">
                       {item.description}
-                    </p>
+                    </span>
                     <h5 className="card-title">${item.price}</h5>
                     <Link
                       to={`/products/${item.id}`}
@@ -93,7 +93,7 @@ const CategoryPage = () => {
         </div>
       ))
       ):(
-        <p className='loading-api'>Loading...</p>
+        <span className='loading-api'>Loading...</span>
       )}
     </div>  
   );
