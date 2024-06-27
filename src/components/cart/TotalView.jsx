@@ -44,7 +44,7 @@ const TotalView = ({ cart, totalPrice, totalQuantity }) => {
 
     useEffect(() => {
         dispatch(getCartTotal());
-    }, []);
+    }, [dispatch]);
 
     const discount = 5;
     return (

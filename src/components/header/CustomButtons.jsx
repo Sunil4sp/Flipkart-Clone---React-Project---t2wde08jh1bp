@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Typography, Badge, Button, styled } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
@@ -69,7 +69,7 @@ const CustomButton = () => {
     if (localStorage.getItem("signup") !== null) {
       setAccountPresent(true);
     }
-  }, [cart]);
+  }, [dispatch, cart]);
 
 
 

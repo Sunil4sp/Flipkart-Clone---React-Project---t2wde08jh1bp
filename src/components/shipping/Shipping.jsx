@@ -1,3 +1,9 @@
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import LoginDialog from "../login/LoginDialog";
+import TotalView from "../cart/TotalView";
+
 import {
   Box,
   Typography,
@@ -11,12 +17,6 @@ import {
   FormGroup,
 } from "@mui/material";
 
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import LoginDialog from "../login/LoginDialog";
-
-import TotalView from "../cart/TotalView";
 
 const OuterComponent = styled(Card)`
   border-top: 2px solid #f0f0f0;
@@ -77,12 +77,14 @@ const Shipping = () => {
   const [userAddress, setUserAddress] = useState("");
   const [userPhone, setUserPhone] = useState('');
 
-  const [accountPresent, setAccountPresent] = useState(true);
+  const [ setAccountPresent] = useState(true);
   const [open, setOpen] = useState(false);
 
-  const openDialog = () => {
+  /* const openDialog = () => {
     setOpen(true);
-  }
+  } */
+
+    setOpen(true);
 
   const { cart, totalPrice, totalQuantity } = useSelector(
     (state) => state.allCart
@@ -91,7 +93,7 @@ const Shipping = () => {
 
   const orderPlaced = () => {
     if (userName !== "" && userAddress !== "" && userPhone !== "") {
-      alert("✨Congratulation!🎊, You Order ❤ has been Placed Successfully");
+      alert("✨Congratulation!🎊, Your Order ❤ has been Placed Successfully");
       setUserName("");
       localStorage.removeItem("shoppingCart");
       navigate("/");
@@ -159,7 +161,7 @@ const Shipping = () => {
         />
       </Grid>
     </Component>
-    <LoginDialog open={open} setOpen={setOpen} setAccountPresent={setAccountPresent } />
+    <LoginDialog open={open} setOpen={setOpen} setAccountPresent={setAccountPresent} />
     </>
   );
 };

@@ -26,7 +26,7 @@ export const cartSlice = createSlice({
     reducers: {
         addToCart: (state, action) => {
             const find = state.cart.findIndex((item) => item.id === action.payload.id);
-            if (find >= 0)
+            if (find <= 0)
                 state.cart[find].totalQuantity += 1;
             else
                 state.cart.push(action.payload);

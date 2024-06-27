@@ -1,4 +1,4 @@
-import { Grid, Box, styled } from '@mui/material'
+import { Grid, styled } from '@mui/material'
 import React from 'react'
 
 import { midImageURL } from '../../constants/data'

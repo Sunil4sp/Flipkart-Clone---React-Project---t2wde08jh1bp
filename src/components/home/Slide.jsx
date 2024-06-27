@@ -3,7 +3,7 @@ import Carousel from 'react-multi-carousel';
 import { Box, Button, Divider, styled, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 //for react countdown
-import Countdown from 'react-countdown';
+/* import Countdown from 'react-countdown'; */
 import { useSelector } from 'react-redux';
 
 // Carousel breakpoints
@@ -102,9 +102,9 @@ const Slide = (props) => {
             >
                 {
                     items.map(item => (
-                        <Link to={`products/${item.id}`} style={{ textDecoration: 'none' }} key="{slide}" >
+                        <Link to={`/products/${item.id}`} style={{ textDecoration: 'none' }} key="{slide}" >
                             <Timer textAlign='center' style={{ padding: '25px 10px' }} >
-                                <Image src=/* {item.image} */{item.thumbnail} alt="banner" />
+                                <Image src={item.images}/* {item.thumbnail} */ alt="banner" />
                                 <Text style={{ /* fontWeight: 600, */ color: '#212121' }}>{item.title}</Text>
                                 <Text style={{ /* color: 'green' */ color: 'black', fontWeight: 600, }}>$ {item.price} only</Text>
                                 {/* <Text style={{}}>{item.category}</Text> */}
