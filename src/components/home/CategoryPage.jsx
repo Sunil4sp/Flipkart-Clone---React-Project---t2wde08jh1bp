@@ -80,7 +80,7 @@ const CategoryPage = () => {
                     <span className="card-text product-description-list">
                       {item.description}
                     </span>
-                    <h5 className="card-title">${item.price}</h5>
+                    <h5 className="card-title">₹{Math.round(30 * item.price)}</h5>
                     <Link
                       to={`/products/${item.id}`}
                       className="btn btn-primary button-buy-now"

@@ -41,7 +41,7 @@ const ProductDetail = (props) => {
         <Box component="span"><img src={fassured} style={{ width: 77, marginLeft: 20 }} alt=''/></Box>
       </Typography>
       <Typography>
-        <Box style={{ fontSize: 28 }}>${props.itemData.price}</Box>&nbsp;&nbsp;&nbsp;
+        <Box style={{ fontSize: 28 }}>₹ {Math.round(30 * props.itemData.price)}</Box>&nbsp;&nbsp;&nbsp;
         <Box style={{ color: '#878787' }}><strike>${props.itemData.price - 50}</strike></Box>&nbsp;&nbsp;&nbsp;
         <Box style={{ color: '#388E3C' }}>{50} off</Box>
       </Typography>

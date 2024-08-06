@@ -82,9 +82,9 @@ const CartItem = ({ item, totalQuantity, totalprice, quantity }) => {
                     <span><img src={fassured} style={{ width: 50, marginLeft: 10 }} alt=''/></span>
                 </SmallText>
                 <Typography style={{ margin: '20px 0' }}>
-                    <Cost component="span">${item.price}</Cost>&nbsp;&nbsp;&nbsp;
-                    <MRP component="span"><strike>${item.price}</strike></MRP>&nbsp;&nbsp;&nbsp;
-                    <Discount component="span">{item.price} off</Discount>
+                    <Cost component="span">₹{Math.round(30*item.price-20)}</Cost>&nbsp;&nbsp;&nbsp;
+                    <MRP component="span"><strike>₹{Math.round(30*item.price)}</strike></MRP>&nbsp;&nbsp;&nbsp;
+                    <Discount component="span">20 off</Discount>
                 </Typography>
                 <Box>{item.totalQuantity}</Box>
                 <Remove onClick={() => dispatch(removeItem(item.id))}>Remove</Remove>
