@@ -32,6 +32,7 @@ const ProductDetail = (props) => {
   const adURL = 'https://rukminim1.flixcart.com/lockin/774/185/images/CCO__PP_2019-07-14.png?q=50';
   const fassured = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png';
   const date = new Date(new Date().getTime() + (5 * 24 * 60 * 60 * 1000));
+  console.log(props.itemData.thumbnail);
 
   return (
     <>

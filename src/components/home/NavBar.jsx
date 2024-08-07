@@ -52,7 +52,6 @@ const NavBar = (event) => {
               {/* <DropDownMenu items={data.text} /> */}
             </div>
             </Link>
-            
           </Container>
         ))}
       </Component>

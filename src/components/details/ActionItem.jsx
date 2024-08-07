@@ -52,7 +52,7 @@ const ActionItem = (props) => {
   return (
     <LeftContainer>
       <Box style={{ padding: '15px 20px', border: '1px solid #f0f0f0' }}>
-        <Image src={props.itemData.images} style={{ width: 290}} alt="productImage" />
+        <Image src={props.itemData.thumbnail} style={{ width: 290}} alt="productImage" />
         {console.log(props.itemData)}
       </Box>
       <StyledButton onClick={()=>dispatch(addToCart(props.itemData))} style={{ marginRight: 10, background: '#ff9f00' }} variant='contained'><ShoppingCartIcon />Add to Cart</StyledButton>
