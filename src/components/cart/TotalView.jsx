@@ -46,7 +46,7 @@ const TotalView = ({ cart, totalPrice, totalQuantity }) => {
         dispatch(getCartTotal());
     }, [dispatch]);
 
-    const discount = 40;
+    const discount = 30;
     return (
         <Box>  
            
@@ -64,7 +64,7 @@ const TotalView = ({ cart, totalPrice, totalQuantity }) => {
                     <Price component="span">₹40</Price>
                 </Typography>
                 <TotalAmount>Total Amount
-                    <Price>₹{totalPrice - discount + 2}</Price>
+                    <Price>₹{totalPrice - discount + 40}</Price>
                 </TotalAmount>
                 <Discount>You will save ₹{40 - discount} on this order</Discount>
             </Container>

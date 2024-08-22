@@ -5,6 +5,7 @@ import ProductDetail from './ProductDetail';
 
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import products from '../../data/allProductData';
 
 const Component = styled(Box)`
     margin-top: 55px;
@@ -39,18 +40,18 @@ const DetailView = () => {
     useEffect(() => {
         setItemData(items[fetchId.id]);
         /* console.log(items,[fetchId]); */
-    }, [items,fetchId.id]);
+    }, [items,fetchId]);
 
     return (
         <Component>
             <Grid container>
 
                 <Container item lg={4} md={4} sm={8} xs={12}>
-                    <ActionItem itemData={itemData} />
+                    <ActionItem itemData= /* {products} */{itemData} />
                 </Container>
 
                 <RightContainer item lg={8} md={8} sm={8} xs={12}>
-                    <ProductDetail itemData={itemData} />
+                    <ProductDetail itemData= {itemData} />
                 </RightContainer>
 
             </Grid>

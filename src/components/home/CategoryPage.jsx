@@ -59,11 +59,11 @@ const CategoryPage = () => {
 
   return (
     <div>
-      <h2 style={{padding: '20px 50px'}}>{category} Products</h2>
+      <h2 style={{padding: '15px 50px'}}>{category} Products</h2>
       {Array.isArray(tempCategoryProducts) ? (
       tempCategoryProducts.map((item) => (
         <div key={item.id}>
-          <span style={{padding: '15px 60px', fontWeight: '700'}}>{item.title}</span>
+          <div style={{padding: '20px 60px', fontWeight: '700'}}>{item.title}</div>
           <div className="col-3" key={item.id}>
                 <div className="card">
                     <div className="imagDiv">
@@ -86,6 +86,12 @@ const CategoryPage = () => {
                       className="btn btn-primary button-buy-now"
                     >
                       Buy Now
+                    </Link>
+                    <Link
+                      to={`/products/${item.id}`}
+                      className="btn btn-primary button-add-to-cart"
+                    >
+                      Add to Cart
                     </Link>
                   </div>
                 </div>

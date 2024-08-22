@@ -27,23 +27,23 @@ const StyledBadge = styled(Badge)`
     font-size: 15px;
 `;
 
-const ProductDetail = (props) => {
+const ProductDetail = (itemData) => {
 
   const adURL = 'https://rukminim1.flixcart.com/lockin/774/185/images/CCO__PP_2019-07-14.png?q=50';
   const fassured = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png';
   const date = new Date(new Date().getTime() + (5 * 24 * 60 * 60 * 1000));
-  console.log(props.itemData.thumbnail);
+  /* console.log(itemData.thumbnail); */
 
   return (
     <>
-      <Typography>{props.itemData.title}</Typography>
+      <Typography>{itemData.title}</Typography>
       <Typography style={{ marginTop: 5, color: '#878787', fontSize: 14 }}>
         28 Ratings & 1 Reviews
         <Box component="span"><img src={fassured} style={{ width: 77, marginLeft: 20 }} alt=''/></Box>
       </Typography>
       <Typography>
-        <Box style={{ fontSize: 28 }}>₹ {Math.round(30 * props.itemData.price)}</Box>&nbsp;&nbsp;&nbsp;
-        <Box style={{ color: '#878787' }}><strike>${props.itemData.price - 50}</strike></Box>&nbsp;&nbsp;&nbsp;
+        <Box style={{ fontSize: 28 }}>₹ {Math.round(30 * itemData.price-50)}</Box>&nbsp;&nbsp;&nbsp;
+        <Box style={{ color: '#878787' }}><strike>₹{Math.round(30 * itemData.price)}</strike></Box>&nbsp;&nbsp;&nbsp;
         <Box style={{ color: '#388E3C' }}>{50} off</Box>
       </Typography>
 
@@ -80,7 +80,7 @@ const ProductDetail = (props) => {
           </ColumnText>
           <ColumnText>
             <TableCell style={{ color: '#878787' }}>Description</TableCell>
-            <TableCell>{props.itemData.description}</TableCell>
+            <TableCell>{itemData.description}</TableCell>
           </ColumnText>
         </TableBody>
       </Table>

@@ -39,12 +39,16 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
 
 //============================================function starts===================================
-const ActionItem = (props) => {
+const ActionItem = ({itemData}) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  /* console.log(props.itemData.thumbnail); */
+  if (!itemData) {
+    return <div>Loading...</div>; // or handle the case when itemData is undefined
+  }
+
+  /* console.log(itemData); */
 
   const goToCart = () => {
     navigate('/cart');
@@ -52,10 +56,10 @@ const ActionItem = (props) => {
   return (
     <LeftContainer>
       <Box style={{ padding: '15px 20px', border: '1px solid #f0f0f0' }}>
-        <Image src={props.itemData.thumbnail} style={{ width: 290}} alt="productImage" />
-        {console.log(props.itemData)}
+        <Image src={itemData.thumbnail} style={{ width: 290}} alt="productImage" />
+        {/* {console.log(itemData.thumbnail)} */}
       </Box>
-      <StyledButton onClick={()=>dispatch(addToCart(props.itemData))} style={{ marginRight: 10, background: '#ff9f00' }} variant='contained'><ShoppingCartIcon />Add to Cart</StyledButton>
+      <StyledButton onClick={()=>dispatch(addToCart(itemData))} style={{ marginRight: 10, background: '#ff9f00' }} variant='contained'><ShoppingCartIcon />Add to Cart</StyledButton>
       <StyledButton onClick={goToCart} style={{ background: '#fb641b' }} variant='contained'><FlashOnIcon />Go to Cart</StyledButton>
     </LeftContainer>
   )

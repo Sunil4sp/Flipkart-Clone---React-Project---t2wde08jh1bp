@@ -47,7 +47,7 @@ const StyledButton = styled(Button)`
     border-radius: 50%;
 `;
 
-const CartItem = ({ item, totalQuantity, totalprice, quantity }) => {
+const CartItem = ({ item, totalQuantity, totalprice, quantity, price }) => {
 
     const { cart } = useSelector((state) => state.allCart);
 
@@ -87,7 +87,7 @@ const CartItem = ({ item, totalQuantity, totalprice, quantity }) => {
                     <Discount component="span">20 off</Discount>
                 </Typography>
                 <Box>{item.totalQuantity}</Box>
-                <Remove onClick={() => dispatch(removeItem(item.id))}>Remove</Remove>
+                {/* <Remove onClick={() => dispatch(decreaseItemQuantity(item.id) */} {/* removeItem(item.id))}>Remove</Remove> */}
             </Box>
         </Component>
     )
