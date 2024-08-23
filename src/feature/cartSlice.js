@@ -47,13 +47,13 @@ export const cartSlice = createSlice({
       const { totalQuantity, totalPrice } = state.cart.reduce(
         (cartTotal, cartItem) => {
           const { price, quantity } = cartItem;
-          console.log(price, quantity);
+          /* console.log(price, quantity); */
           const itemTotal = Math.round(30 * price - 20) * quantity;
-          console.log(itemTotal, price, quantity);
+          /* console.log(itemTotal, price, quantity); */
           cartTotal.totalPrice += itemTotal;
-          console.log(cartTotal.totalPrice);
+          //console.log(cartTotal.totalPrice);
           cartTotal.totalQuantity += quantity;
-          console.log(cartTotal.totalQuantity);
+          //console.log(cartTotal.totalQuantity);
           return cartTotal;
         },
         { totalPrice: 0, totalQuantity: 0 }

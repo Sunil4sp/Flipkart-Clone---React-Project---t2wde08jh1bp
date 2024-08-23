@@ -5,7 +5,6 @@ import ProductDetail from './ProductDetail';
 
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import products from '../../data/allProductData';
 
 const Component = styled(Box)`
     margin-top: 55px;
@@ -31,27 +30,36 @@ const RightContainer = styled(Grid)`
 
 const DetailView = () => {
     
-    const fetchId = useParams();
+    const { id }= useParams();
     
-    const [itemData, setItemData] = useState([]);
+    const [itemData, setItemData] = useState(null);
     
-
     const items = useSelector((state) => state.allCart.item);
+
     useEffect(() => {
-        setItemData(items[fetchId.id]);
-        /* console.log(items,[fetchId]); */
-    }, [items,fetchId]);
+        if(items && items.length > 0){
+            const item = items.find((item) => item.id === parseInt(id));
+            console.log("Found Item.",item);
+            setItemData(item);
+        }
+    }, [items, id]);
+
+    useEffect(() => {
+        console.log("itemData in DetailView:", itemData);
+    }, [itemData]);
+        /* setItemData(items[fetchId.id]);
+    }, [items,fetchId]); */
 
     return (
         <Component>
             <Grid container>
 
                 <Container item lg={4} md={4} sm={8} xs={12}>
-                    <ActionItem itemData= /* {products} */{itemData} />
+                    {itemData ? <ActionItem itemData= {itemData} /> : <div>Loading...</div>}
                 </Container>
 
                 <RightContainer item lg={8} md={8} sm={8} xs={12}>
-                    <ProductDetail itemData= {itemData} />
+                    {itemData ? <ProductDetail itemData= {itemData} /> : <div>Loading...</div>}
                 </RightContainer>
 
             </Grid>

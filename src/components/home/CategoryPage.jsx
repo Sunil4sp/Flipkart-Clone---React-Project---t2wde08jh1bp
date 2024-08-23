@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import '../../App.css';
+import { useDispatch } from 'react-redux';
+import { Button } from '@mui/material';
+/* import DetailView from '../details/DetailView'; */
+import { addToCart } from '../../feature/cartSlice';
 
 const CategoryPage = () => {
   const { category } = useParams();
   const lowercaseCategory = category.toLowerCase();
 
-  let [tempCategoryProducts, setProducts] = useState({});
+  let [tempCategoryProducts, setProducts] = useState([]);
+  const dispatch = useDispatch();
 
   /* useEffect(() => {
     try{
@@ -43,7 +48,6 @@ const CategoryPage = () => {
     const data = await response.json();
     if (data && data.products && Array.isArray(data.products)) {
       setProducts(data.products);
-      /* console.log(data.products); */
       } else{
         console.error('Invalid data format:', data);
       }
@@ -56,11 +60,15 @@ const CategoryPage = () => {
     callApi(lowercaseCategory);
   }, [lowercaseCategory]);
 
+  const handleAddToCart = (item) =>{
+    dispatch(addToCart(item));
+  }
 
   return (
     <div>
       <h2 style={{padding: '15px 50px'}}>{category} Products</h2>
-      {Array.isArray(tempCategoryProducts) ? (
+      {/* {Array.isArray(tempCategoryProducts) ? ( */}
+      {tempCategoryProducts.length > 0 ? (
       tempCategoryProducts.map((item) => (
         <div key={item.id}>
           <div style={{padding: '20px 60px', fontWeight: '700'}}>{item.title}</div>
@@ -70,7 +78,7 @@ const CategoryPage = () => {
                         <img
                             src=/*{item.image}*/ {item.thumbnail}
                             className="card-img-top product-image-list"
-                            alt="..."
+                            alt={item.title}
                         />
                     </div>    
                   <div className="card-body">
@@ -81,12 +89,13 @@ const CategoryPage = () => {
                       {item.description}
                     </span>
                     <h5 className="card-title">₹{Math.round(30 * item.price)}</h5>
-                    <Link
-                      to={`/products/${item.id}`}
+                    <Button
+                      /*to={DetailView} {`/products/${item.id}`} */
+                      onClick={() => handleAddToCart(item)}
                       className="btn btn-primary button-buy-now"
                     >
                       Buy Now
-                    </Link>
+                    </Button>
                     <Link
                       to={`/products/${item.id}`}
                       className="btn btn-primary button-add-to-cart"

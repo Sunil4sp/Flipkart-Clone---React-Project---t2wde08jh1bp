@@ -77,14 +77,14 @@ const Shipping = () => {
   const [userAddress, setUserAddress] = useState("");
   const [userPhone, setUserPhone] = useState('');
 
-  const [ setAccountPresent] = useState(true);
+  const [ accountPresent, setAccountPresent] = useState(true);
   const [open, setOpen] = useState(false);
 
   /* const openDialog = () => {
     setOpen(true);
-  } */
+  } 
 
-    setOpen(true);
+    setOpen(true);*/
 
   const { cart, totalPrice, totalQuantity } = useSelector(
     (state) => state.allCart
