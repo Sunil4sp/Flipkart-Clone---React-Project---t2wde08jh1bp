@@ -88,7 +88,7 @@ const CategoryPage = () => {
                     <span className="card-text product-description-list">
                       {item.description}
                     </span>
-                    <h5 className="card-title">₹{Math.round(30 * item.price)}</h5>
+                    <h5 className="card-title">₹{Math.round(50 * item.price)}</h5>
                     <Button
                       /*to={DetailView} {`/products/${item.id}`} */
                       onClick={() => handleAddToCart(item)}

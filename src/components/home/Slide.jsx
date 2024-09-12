@@ -106,7 +106,7 @@ const Slide = (props) => {
                             <Timer textAlign='center' style={{ padding: '25px 10px' }}>
                                 <Image src=/* {item.images} */{item.thumbnail} alt="banner" />
                                 <Text style={{ /* fontWeight: 600, */ color: '#212121' }}>{item.title}</Text>
-                                <Text style={{ /* color: 'green' */ color: 'black', fontWeight: 600, }}>₹ {Math.round(30 * item.price)}</Text>
+                                <Text style={{ /* color: 'green' */ color: 'black', fontWeight: 600, }}>₹ {Math.round(50 * item.price)}</Text>
                                 {/* <Text style={{}}>{item.category}</Text> */}
                             </Timer>
                         </Link>

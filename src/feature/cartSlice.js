@@ -48,7 +48,7 @@ export const cartSlice = createSlice({
         (cartTotal, cartItem) => {
           const { price, quantity } = cartItem;
           /* console.log(price, quantity); */
-          const itemTotal = Math.round(30 * price - 20) * quantity;
+          const itemTotal = Math.round(50 * price - 20) * quantity;
           /* console.log(itemTotal, price, quantity); */
           cartTotal.totalPrice += itemTotal;
           //console.log(cartTotal.totalPrice);

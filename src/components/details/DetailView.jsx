@@ -59,6 +59,7 @@ const DetailView = () => {
                 </Container>
 
                 <RightContainer item lg={8} md={8} sm={8} xs={12}>
+                    {/* {console.log(itemData.title)} */}
                     {itemData ? <ProductDetail itemData= {itemData} /> : <div>Loading...</div>}
                 </RightContainer>
 

@@ -47,7 +47,7 @@ const StyledButton = styled(Button)`
     border-radius: 50%;
 `;
 
-const CartItem = ({ item={}, totalQuantity=0, totalprice=0, quantity=0, price=0 }) => {
+const CartItem = ({ item={}, totalQuantity, totalprice, quantity, price }) => {
 
     const { cart } = useSelector((state) => state.allCart);
     console.log("Cart from Redux state:", cart);
@@ -70,11 +70,11 @@ const CartItem = ({ item={}, totalQuantity=0, totalprice=0, quantity=0, price=0 
     return (
         <Component>
             <LeftComponent>
-                <img src={item.thumbnail || 'default-thumbnil.jpg'} style={{ height: 110, width: 110 }} alt=''/>
+                <img src={item.thumbnail || 'default-thumbnail.jpg'} style={{ height: 110, width: 110 }} alt=''/>
                 
                 <ButtonComponent>
                     <StyledButton onClick={() => dispatch(decreaseItemQuantity(item.id))}>-</StyledButton>
-                    <Button disabled>{item.quantity || 0}</Button>
+                    {<Button disabled>{item.quantity || 0}</Button>}
                     <StyledButton onClick={() => dispatch(increaseItemQuantity(item.id))}>+</StyledButton>
                 </ButtonComponent>
 
@@ -85,11 +85,11 @@ const CartItem = ({ item={}, totalQuantity=0, totalprice=0, quantity=0, price=0 
                     <span><img src={fassured} style={{ width: 50, marginLeft: 10 }} alt=''/></span>
                 </SmallText>
                 <Typography style={{ margin: '20px 0' }}>
-                    <Cost component="span">₹{Math.round(30*item.price-20)}</Cost>&nbsp;&nbsp;&nbsp;
-                    <MRP component="span"><strike>₹{Math.round(30*item.price)}</strike></MRP>&nbsp;&nbsp;&nbsp;
+                    <Cost component="span">₹{Math.round(50*item.price-20)}</Cost>&nbsp;&nbsp;&nbsp;
+                    <MRP component="span"><strike>₹{Math.round(50*item.price)}</strike></MRP>&nbsp;&nbsp;&nbsp;
                     <Discount component="span">20 off</Discount>
                 </Typography>
-                <Box>{item.totalQuantity || 0}</Box>
+                {/* <Box>{item.totalQuantity || 0}</Box> */}
                 {/* <Remove onClick={() => dispatch(decreaseItemQuantity(item.id) */} {/* removeItem(item.id))}>Remove</Remove> */}
             </Box>
         </Component>
