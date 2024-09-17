@@ -33,7 +33,7 @@
 
 .button-buy-now{
   text-decoration: none;
-  color: inherit;
+  color: #000;
   border-radius: 8px;
   padding: 10px;
   box-shadow: 5px 2px 10px 5px #f2f2f2;
@@ -41,7 +41,7 @@
 
 .button-add-to-cart{
   text-decoration: none;
-  color: inherit;
+  color: #000;
   border-radius: 8px;
   margin-left: 20px;
   padding: 10px;

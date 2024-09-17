@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import '../../App.css';
 import { useDispatch } from 'react-redux';
-import { Button } from '@mui/material';
-/* import DetailView from '../details/DetailView'; */
 import { addToCart } from '../../feature/cartSlice';
 
 const CategoryPage = () => {
@@ -89,15 +87,14 @@ const CategoryPage = () => {
                       {item.description}
                     </span>
                     <h5 className="card-title">₹{Math.round(50 * item.price)}</h5>
-                    <Button
-                      /*to={DetailView} {`/products/${item.id}`} */
-                      onClick={() => handleAddToCart(item)}
+                    <Link
+                      to={`/products/${item.id}`}
                       className="btn btn-primary button-buy-now"
                     >
                       Buy Now
-                    </Button>
+                    </Link>
                     <Link
-                      to={`/products/${item.id}`}
+                      onClick={() => handleAddToCart(item)}
                       className="btn btn-primary button-add-to-cart"
                     >
                       Add to Cart

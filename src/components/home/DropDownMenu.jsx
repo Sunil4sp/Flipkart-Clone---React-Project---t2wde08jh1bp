@@ -28,7 +28,7 @@ const DropDownMenu = ({onSelect}) => {
     // Set the initial sub-category items based on the initial category
     setSubCategoryItems(subcategories[selectedCategory] || []);
     console.log(subcategories[selectedCategory]);
-  }, [selectedCategory]);
+  }, [selectedCategory,subCategoryItems,subcategories]);
 
   /* const handleMouseEnter = (category) =>{
     setSelectedCategory(category);

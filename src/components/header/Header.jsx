@@ -13,9 +13,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import Search from "./Search";
 import CustomButtons from "./CustomButtons";
+import logoURL from '../../images/S.png';
 
 const StyleHeader = styled(AppBar)`
-  background: #2874f0;
+  background: /* #2874f0 */ green;
   height: 55px;
 `;
 
@@ -30,6 +31,8 @@ const Component = styled(Link)`
 const SubHeading = styled(Typography)`
   font-size: 10px;
   font-style: italic;
+  padding-left: 30px;
+  padding-bottom: 10px;
 `;
 
 const PlusImage = styled("img")({
@@ -58,8 +61,8 @@ const MenuButton = styled(IconButton)(({ theme }) => ({
 
 // main function
 const Header = () => {
-  const logoURL =
-    "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/flipkart-plus_8d85f4.png";
+  /* const logoURL = */
+    /* "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/flipkart-plus_8d85f4.png" */ ;
   const subURL =
     "https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/plus_aef861.png";
 
@@ -94,7 +97,7 @@ const Header = () => {
         </Drawer>
 
         <Component to="/">
-          <img src={logoURL} style={{ width: 75 }} alt=""/>
+          <img src={logoURL} style={{ width: 120 }} alt=""/>
           <Box component="span" style={{ display: "flex" }}>
             <SubHeading>
               Explore&nbsp;
