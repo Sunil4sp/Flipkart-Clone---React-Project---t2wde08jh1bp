@@ -10,6 +10,8 @@ import Context from "./context/Context";
 import CategoryPage from "./components/home/CategoryPage";
 
 //=======================================function starts=======================================
+
+
 function App() {
 
   return (

@@ -37,7 +37,7 @@ const Wrapper = styled(Box)(({ theme }) => ({
 }));
 
 const LoginButton = styled(Button)`
-  color: #2874f0;
+  color: green;
   background: #FFFFFF;
   text-transform: none;
   font-weight: 600;
@@ -46,6 +46,11 @@ const LoginButton = styled(Button)`
   height: 32;
   box-shadow: none;
   margin-left:20px;
+
+  &:hover {
+    color: #FFFFFF; /* Change text color on hover */
+    background: green; /* Change background color on hover */
+  }
 `
 //=========================================function starts===========================
 const CustomButton = () => {
@@ -79,7 +84,7 @@ const CustomButton = () => {
         accountPresent ? <Profile localUserName={localUserName} accountPresent={accountPresent} setAccountPresent={setAccountPresent} /> :
         <LoginButton variant='contained' onClick={openDialog}>Login</LoginButton>
       }
-      <Typography style={{ marginTop: 3, width: 135, cursor:'pointer' }}>Become a Seller</Typography>
+      <Typography style={{ marginTop: 3, width: 135, cursor:'pointer' }}>Profile</Typography>
       <Typography style={{ marginTop: 3, cursor: 'pointer' }}>More</Typography>
 
       <Container to='/cart'>
