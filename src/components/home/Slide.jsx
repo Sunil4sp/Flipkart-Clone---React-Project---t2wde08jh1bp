@@ -43,7 +43,7 @@ const DealText = styled(Typography)`
 `
 const ViewAllButton = styled(Button)`
     margin-left: auto;                      //aligning the button to the left
-    background-color: #2874f0;
+    background-color: green /* #2874f0 */;
     border-radius: 2px;
     font-size: 13px;
     font-weight:600;

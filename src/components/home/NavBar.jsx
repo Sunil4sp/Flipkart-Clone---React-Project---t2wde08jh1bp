@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+/* import { Link } from 'react-router-dom'; */
 import { Box, styled, Typography } from '@mui/material';
 import { navData } from '../../constants/data';
-/* import DropDownMenu from './DropDownMenu'; */
+import DropDownMenu from './DropDownMenu';
 
 const Component = styled(Box)(
     ({ theme }) => (
@@ -43,15 +43,17 @@ const NavBar = (event) => {
           <Container key={data.text} 
             onClick={() => handleItemClick(data.text)}
             > 
-            <Link 
+            {/* <Link 
               style={{textDecoration: 'none', color: 'inherit'}} 
-              to={`/products/category/${encodeURIComponent(data.text)}`}>
+              to={`/products/category/${encodeURIComponent(data.text)}`}> */}
             <img src={data.url} alt="nav" style={{ width: 64, height: 64 }} />
-            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '2px 0'}}>
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '2px 0'/* , width:'40px' */}}>
               <Text key="{txt}" style={{paddingRight: '5px'}}>{data.text}</Text>
-              {/* <DropDownMenu items={data.text} /> */}
+              <DropDownMenu items={data.text} /* to={`/products/category/${encodeURIComponent(data.text)}`} */ />
+              
             </div>
-            </Link>
+            {/* <DropDownMenu items={data.text} /> */}
+            {/* </Link> */}
           </Container>
         ))}
       </Component>

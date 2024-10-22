@@ -1,55 +1,73 @@
 import React, { useState, useEffect } from 'react';
 import '../../App.css';
 import { Link } from 'react-router-dom';
+import { navData } from '../../constants/data';
 /* import { Box, styled } from '@mui/material'; */
 
 
 const DropDownMenu = ({onSelect}) => {
   const [isClicked, setIsClicked] = useState(false);
+  /* const [isHovered, setIsHovered] = useState(false); */
   const [selectedCategory, setSelectedCategory] = useState('');
   const [subCategoryItems, setSubCategoryItems] = useState([]);
 
   const validCategories = [
     "fashion",
     "electronics",
-    "beauty, toys & more",
-    "two wheelers",
-    "home & furniture",
+    "beauty",
+    "auto",
+    "home",
+    "accessories"
   ];
 
   const subcategories = {
-    'fashion': ["women's fashion", "men's fashion"],
-    'electronics': ["laptops", "lighting"],
-    "beauty, toys & more": ['fragrances', 'skincare', 'automotive'],
-    "home & furniture": ['home-decoration', 'furniture']
+    'fashion': ["women's dresses", "men's fashion", "men's Shoes", "men's watches", "tops", "women's shoes", 'womens bags'],
+    'electronics': ["laptops", "tablets"],
+    "beauty": ['fragrances', 'skincare', 'automotive'],
+    "auto": ['vehicle', "motorcycle"],
+    "home": ['home decoration', 'furniture'],
+    "accessories": ['kitchen accessories', 'sports accessories', 'sunglasses', 'womens jewellery' , 'womens watches']
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     // Set the initial sub-category items based on the initial category
     setSubCategoryItems(subcategories[selectedCategory] || []);
-    console.log(subcategories[selectedCategory]);
-  }, [selectedCategory,subCategoryItems,subcategories]);
+     console.log(subcategories[selectedCategory]); 
+  }, [selectedCategory]); */
 
-  /* const handleMouseEnter = (category) =>{
+  useEffect(() => {
+    if (selectedCategory) {
+      setSubCategoryItems(subcategories[selectedCategory]);
+    } else {
+      setSubCategoryItems([]);
+    }
+  }, [selectedCategory]);
+
+ /*  const handleMouseEnter = (category) =>{
     setSelectedCategory(category);
     setIsClicked(true);
-  };
- */
-  /* const handleMouseLeave = () => {
+    }; */
+
+  const handleMouseLeave = () => {
     setSelectedCategory('');
     setIsClicked(false);
-  }; */
+  };
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
-    if(category === subcategories[selectedCategory])
-    setIsClicked(true);
+    /* if(category === subcategories[selectedCategory])*/
     onSelect(category);
+    setIsClicked(true);
+    console.log(category);
   };
 
   return (
-    <div className="dropDown_div" /* onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} */>
-        <span className={`dropDown_span ${isClicked ? 'active' : ''}`}>
+    <>
+    {navData.map((data, index) => (
+    <div className="dropDown_div" onClick={()=> setIsClicked(true)} onMouseLeave={handleMouseLeave}>
+      <Link style={{textDecoration: 'none', color: 'inherit'}}
+       to={`/products/category/${encodeURIComponent(data.text)}`}>
+        <div className={`dropDown_span ${isClicked ? 'active' : ''}`}>
           <div className={`listItems ${isClicked ? 'show' : ''}`}>
           <ul>
           {subCategoryItems.map((item, index) => (
@@ -57,22 +75,28 @@ const DropDownMenu = ({onSelect}) => {
             ))}
           </ul>
           </div>
-        </span>
+          
+        </div>
         {isClicked && (
         <ul>
           {validCategories.map((category, index) => (
             <li
               className='navbar_items'
               key={index}
-              /* onMouseEnter={() => handleMouseEnter(category)} */
+               /* onMouseEnter={() => handleMouseEnter(category)} */
               onClick={() => handleCategoryClick(category)}
-            ><Link to=''>{category}</Link>
+            ><Link className='link' to=''>{category}</Link>
               
             </li>
           ))}
         </ul>
       )}
+      
+      </Link>
+      
     </div>
+    ))}
+    </>
   )
 }
 

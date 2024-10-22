@@ -18,7 +18,7 @@ const RightComponent = styled(Box)(({ theme }) => ({
     background: '#FFFFFF',
     width: '17%',
     marginLeft: 10,
-    padding: 5,
+    /* padding: 5, */
     textAlign: 'center',
     display: 'flex',
     justifyContent:'center',
@@ -28,7 +28,7 @@ const RightComponent = styled(Box)(({ theme }) => ({
 }));
 
 const MidSlides = (props) => {
-    const adURL = 'https://rukminim1.flixcart.com/flap/464/708/image/633789f7def60050.jpg?q=70';
+    const adURL = 'https://i.pinimg.com/originals/92/c6/0c/92c60c57459d56f10ac522bf38900ac1.jpg?q=70'/* 'https://rukminim1.flixcart.com/flap/464/708/image/633789f7def60050.jpg?q=70' */;
   return (
       <Component>
           <LeftComponent>
@@ -39,7 +39,7 @@ const MidSlides = (props) => {
               />
           </LeftComponent>
           <RightComponent>
-              <img src={adURL} style={{ width: 200, height: 280 }} alt='' />
+              <img src={adURL} style={{ width: 175, height: 289 }} alt='' />
           </RightComponent>
       </Component>
   )
