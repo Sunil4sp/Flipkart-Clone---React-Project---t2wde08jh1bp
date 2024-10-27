@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setUserDetails ,setLoginStatus } from "../../feature/users";
 import { useNavigate } from "react-router-dom";
 import LoginDialog from "../login/LoginDialog";
 import TotalView from "../cart/TotalView";
@@ -77,21 +78,34 @@ const Shipping = () => {
   const [userAddress, setUserAddress] = useState("");
   const [userPhone, setUserPhone] = useState('');
 
-  const [ accountPresent, setAccountPresent] = useState(true);
+  /* const [ accountPresent, setAccountPresent] = useState(true); */
   const [open, setOpen] = useState(false);
-
-  /* const openDialog = () => {
-    setOpen(true);
-  } 
-
-    setOpen(true);*/
 
   const { cart, totalPrice, totalQuantity } = useSelector(
     (state) => state.allCart
   );
+
+  const { name, address, phoneNumber, isLoggedIn } = useSelector((state) => state.allUserData);
+  
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleUpdateUser = () => {
+    const userData = {
+      userName : name,
+      userAddress: address,
+      userPhone: phoneNumber,
+    };
+    dispatch(setUserDetails(userData));
+    dispatch(setLoginStatus(true)); // Set user as logged in
+  };
 
   const orderPlaced = () => {
+    if (!isLoggedIn) {
+      // User is not logged in, redirect to login page
+      navigate("/login");
+      return;
+    }
     if (userName !== "" && userAddress !== "" && userPhone !== "") {
       alert("✨Congratulation!🎊, Your Order ❤ has been Placed Successfully");
       setUserName("");
@@ -161,7 +175,7 @@ const Shipping = () => {
         />
       </Grid>
     </Component>
-    <LoginDialog open={open} setOpen={setOpen} setAccountPresent={setAccountPresent} />
+    <LoginDialog open={open} setOpen={setOpen} /* setAccountPresent={setAccountPresent} */ />
     </>
   );
 };

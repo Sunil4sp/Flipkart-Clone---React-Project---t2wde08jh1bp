@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Box, Typography, Badge, Button, styled } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import '../../App.css';
 import LoginDialog from '../login/LoginDialog';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCartTotal } from '../../feature/cartSlice';
-import Profile from './Profile';
+import ProfileManager from '../home/ProfileManager';
 
 const Container = styled(Link)(({ theme }) => ({
   display: 'flex',
@@ -81,10 +82,11 @@ const CustomButton = () => {
   return (
     <Wrapper>
       {
-        accountPresent ? <Profile localUserName={localUserName} accountPresent={accountPresent} setAccountPresent={setAccountPresent} /> :
+        accountPresent ? <ProfileManager localUserName={localUserName} accountPresent={accountPresent} setAccountPresent={setAccountPresent} /> :
         <LoginButton variant='contained' onClick={openDialog}>Login</LoginButton>
       }
-      <Typography style={{ marginTop: 3, width: 135, cursor:'pointer' }}>Profile</Typography>
+      <Typography style={{ marginTop: 3, width: 135, cursor:'pointer' }}>
+        <Link to="/profile" className='profile'>Profile</Link></Typography>
       <Typography style={{ marginTop: 3, cursor: 'pointer' }}>More</Typography>
 
       <Container to='/cart'>
@@ -93,7 +95,7 @@ const CustomButton = () => {
         </Badge>
         <Typography style={{ marginLeft: 10 }}>Cart</Typography>
       </Container>
-      <LoginDialog open={open} setOpen={setOpen} setAccountPresent={setAccountPresent } />
+      <LoginDialog open={open} setOpen={setOpen} /* setAccountPresent={setAccountPresent} */ />
     </Wrapper>
   )
 }

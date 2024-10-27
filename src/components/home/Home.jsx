@@ -2,6 +2,7 @@ import React from 'react';
 import NavBar from './NavBar';
 import Banner from './Banner';
 import Slide from './Slide';
+import LoginDialog from '../login/LoginDialog';
 import { Box, styled } from '@mui/material';
 import MidSlides from './MidSlides';
 
@@ -14,6 +15,7 @@ const Home = () => {
 
   return (
     <>
+    <LoginDialog />
       <NavBar />
       <Component>
         <Banner />

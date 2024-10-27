@@ -8,6 +8,8 @@ import DetailView from './components/details/DetailView';
 import Shipping from "./components/shipping/Shipping";
 import Context from "./context/Context";
 import CategoryPage from "./components/home/CategoryPage";
+import ProfileManager from "./components/home/ProfileManager";
+import LoginDialog from "./components/login/LoginDialog";
 
 //=======================================function starts=======================================
 
@@ -25,6 +27,8 @@ function App() {
             <Route path='/products/:id' element={<DetailView />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/shipping' element={<Shipping />} />
+            <Route path='/profile' element={<ProfileManager />} />
+            <Route path="/login" element={ <LoginDialog />}/>
           </Routes>
         </Box>
       </Router>

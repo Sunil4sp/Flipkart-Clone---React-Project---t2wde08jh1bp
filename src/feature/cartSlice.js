@@ -3,15 +3,6 @@ import productData from "../data/allProductData";
 
 //Getting cartdata form localstorage
 const getLocalCartData = () => {
-  /* if (
-    localStorage.getItem("shoppingCart") === null ||
-    localStorage.getItem("shoppingCart") === []
-  ) {
-    return [];
-  }
-  const localData = localStorage.getItem("shoppingCart");
-  if (localData === []) return [];
-  else return JSON.parse(localData); */
 
   const localData = localStorage.getItem("shoppingCart");
   if (!localData) return [];
@@ -28,6 +19,7 @@ const initialState = {
   item: productData,
   totalQuantity: 0,
   totalPrice: 0,
+  isLoggedIn: false,
 };
 
 export const cartSlice = createSlice({
@@ -47,13 +39,9 @@ export const cartSlice = createSlice({
       const { totalQuantity, totalPrice } = state.cart.reduce(
         (cartTotal, cartItem) => {
           const { price, quantity } = cartItem;
-          /* console.log(price, quantity); */
           const itemTotal = Math.round(50 * price - 20) * quantity;
-          /* console.log(itemTotal, price, quantity); */
           cartTotal.totalPrice += itemTotal;
-          //console.log(cartTotal.totalPrice);
           cartTotal.totalQuantity += quantity;
-          //console.log(cartTotal.totalQuantity);
           return cartTotal;
         },
         { totalPrice: 0, totalQuantity: 0 }
@@ -61,9 +49,7 @@ export const cartSlice = createSlice({
       state.totalPrice = parseFloat(totalPrice.toFixed(2));
       state.totalQuantity = totalQuantity;
     },
-    /* removeItem: (state, action) => {
-            state.cart = state.cart.filter((item) => item.id !== action.payload)
-        }, */
+    
     increaseItemQuantity: (state, action) => {
       state.cart = state.cart.map((item) => {
         if (item.id === action.payload) {
@@ -72,29 +58,24 @@ export const cartSlice = createSlice({
         return item;
       });
     },
-    /* decreaseItemQuantity: (state, action) => {
-            state.cart = state.cart.map((item) => {
-                if (item.id === action.payload) {
-                    if (item.quantity > 0)
-                        return { ...item, quantity: item.quantity - 1 };
-                    else
-                        return state.cart = state.cart.filter((item) => item.id !== action.payload)        
-                }
-                return item;
-            })
-        } */
+    
     decreaseItemQuantity: (state, action) => {
       state.cart = state.cart.reduce((newCart, item) => {
         if (item.id === action.payload) {
           if (item.quantity > 1) {
             newCart.push({ ...item, quantity: item.quantity - 1 });
           }
-          // No else case needed, as `item` should be filtered out if quantity <= 0
         } else {
           newCart.push(item);
         }
         return newCart;
       }, []);
+    },
+    setLoginStatus: (state, action) => {
+      state.isLoggedIn = action.payload; // Set the login status
+    },
+    clearCart: (state) => {
+      state.cart = []; // Clear the cart
     },
   },
 });
@@ -102,9 +83,10 @@ export const cartSlice = createSlice({
 export const {
   addToCart,
   getCartTotal,
-  /* removeItem, */
   increaseItemQuantity,
   decreaseItemQuantity,
+  setLoginStatus,
+  clearCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

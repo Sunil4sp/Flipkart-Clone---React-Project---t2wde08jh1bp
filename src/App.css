@@ -149,3 +149,17 @@
   text-decoration: none;
   color: #000;
 }
+
+.profile{
+  color: white;
+  text-decoration: none;
+  padding: 7px 30px 11px;
+}
+
+.profile:hover{
+  color: green;
+  background-color: white;
+  font-weight: 500;
+  border-radius: 5px;
+  text-transform: none;
+}

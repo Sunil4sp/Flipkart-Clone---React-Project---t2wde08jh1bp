@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { setUserDetails ,setLoginStatus } from "../../feature/users";
 import {
   Dialog,
   Box,
   Typography,
   TextField,
   Button,
-  styled,
+  styled
 } from "@mui/material";
 
 const Component = styled(Box)`
@@ -86,6 +88,7 @@ const accountInitialValues = {
 //{open, setOpen, setAccountPresent} getting as props
 const LoginDialog = (props) => {
 
+  const dispatch = useDispatch();
   const [account, toggleAccount] = useState(accountInitialValues.login);
 
   const handleClose = () => {
@@ -130,7 +133,10 @@ const LoginDialog = (props) => {
     }
   };
 
-  const handleLogin = () => {
+  const handleLogin = (userData) => {
+    if(userData){
+      dispatch(setLoginStatus(true));
+    } 
     if (
       loginEmail === localStorage.getItem('email') && loginPassword === localStorage.getItem('password')) {
       alert("Welcome back🙏, Logged In successfully");
@@ -171,14 +177,14 @@ const LoginDialog = (props) => {
                 label="Enter Password"
               />
               <Text>
-                By continuing, you agree to Flipkart's Terms of Use and Privacy
+                By continuing, you agree to ShopNow's Terms of Use and Privacy
                 Policy.
               </Text>
               <LoginButton onClick={handleLogin}>Login</LoginButton>
               <Typography style={{ textAlign: "center" }}>OR</Typography>
               <RequestOTP>Request OTP</RequestOTP>
               <CreateAccount onClick={toggleSignup}>
-                New to Flipkart? Create an account
+                New to ShopNow? Create an account
               </CreateAccount>
             </Wrapper>
           ) : (

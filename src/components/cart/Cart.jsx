@@ -49,7 +49,7 @@ const Cart = () => {
   );
   const navigate = useNavigate();
   const goToPlaceOrder = () => {
-    let username = localStorage.getItem("username");
+    let username = localStorage.getItem("userName");
     console.log(username);
     if (username === "") {
       navigate("/login");
