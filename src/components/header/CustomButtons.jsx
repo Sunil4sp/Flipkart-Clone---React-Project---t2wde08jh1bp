@@ -66,7 +66,7 @@ const CustomButton = () => {
     setOpen(true);
   }
 
-  const { cart, totalQuantity } = useSelector((state) => state.allCart);
+  const { cart, totalQuantity } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
   

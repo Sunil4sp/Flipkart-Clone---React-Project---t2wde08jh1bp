@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setUserDetails ,setLoginStatus } from "../../feature/users";
+import { setUserDetails ,setLoginStatus } from "../../feature/userSlice";
 import { useNavigate } from "react-router-dom";
-import LoginDialog from "../login/LoginDialog";
 import TotalView from "../cart/TotalView";
+import LoginDialog from '../login/LoginDialog';
 
 import {
   Box,
@@ -82,13 +82,19 @@ const Shipping = () => {
   const [open, setOpen] = useState(false);
 
   const { cart, totalPrice, totalQuantity } = useSelector(
-    (state) => state.allCart
+    (state) => state.cart
   );
-
-  const { name, address, phoneNumber, isLoggedIn } = useSelector((state) => state.allUserData);
+  const { name, address, phoneNumber, isLoggedIn } = useSelector(
+    (state) => state.user);
   
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setOpen(true); // Show login dialog if not logged in
+    }
+  }, [isLoggedIn]);
 
   const handleUpdateUser = () => {
     const userData = {
@@ -98,21 +104,29 @@ const Shipping = () => {
     };
     dispatch(setUserDetails(userData));
     dispatch(setLoginStatus(true)); // Set user as logged in
+    setOpen(false);
   };
 
   const orderPlaced = () => {
+    console.log(isLoggedIn);
+
     if (!isLoggedIn) {
       // User is not logged in, redirect to login page
-      navigate("/login");
+      setOpen(true);
       return;
     }
     if (userName !== "" && userAddress !== "" && userPhone !== "") {
-      alert("✨Congratulation!🎊, Your Order ❤ has been Placed Successfully");
+      alert("✨Congratulation! Your Order has been Placed Successfully");
+
       setUserName("");
       localStorage.removeItem("shoppingCart");
+
       navigate("/");
       window.location.reload();
-    } else alert("🙏Please Enter All the details");
+    } else 
+        /* alert("Please Login to place order");
+        navigate("/login"); */
+        alert("Please fill in all details to place the order.");
   };
 
   return (
@@ -175,7 +189,7 @@ const Shipping = () => {
         />
       </Grid>
     </Component>
-    <LoginDialog open={open} setOpen={setOpen} /* setAccountPresent={setAccountPresent} */ />
+    <LoginDialog open={open} setOpen={setOpen} onLoginSuccess={handleUpdateUser} />
     </>
   );
 };

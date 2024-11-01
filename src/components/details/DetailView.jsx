@@ -34,7 +34,7 @@ const DetailView = () => {
     
     const [itemData, setItemData] = useState(null);
     
-    const items = useSelector((state) => state.allCart.item);
+    const items = useSelector((state) => state.cart.item);
 
     useEffect(() => {
         if(items && items.length > 0){

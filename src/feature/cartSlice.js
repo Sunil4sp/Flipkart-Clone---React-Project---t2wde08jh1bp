@@ -19,7 +19,6 @@ const initialState = {
   item: productData,
   totalQuantity: 0,
   totalPrice: 0,
-  isLoggedIn: false,
 };
 
 export const cartSlice = createSlice({
@@ -71,9 +70,9 @@ export const cartSlice = createSlice({
         return newCart;
       }, []);
     },
-    setLoginStatus: (state, action) => {
+    /* setLoginStatus: (state, action) => {
       state.isLoggedIn = action.payload; // Set the login status
-    },
+    }, */
     clearCart: (state) => {
       state.cart = []; // Clear the cart
     },

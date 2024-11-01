@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
-import { setUserDetails ,setLoginStatus } from "../../feature/users";
+import { setLoginStatus } from "../../feature/userSlice";
 import {
   Dialog,
   Box,
@@ -85,9 +85,9 @@ const accountInitialValues = {
 };
 
 //funtion starts
-//{open, setOpen, setAccountPresent} getting as props
+//{open, setOpen} getting as props
 const LoginDialog = (props) => {
-
+  
   const dispatch = useDispatch();
   const [account, toggleAccount] = useState(accountInitialValues.login);
 
@@ -99,31 +99,35 @@ const LoginDialog = (props) => {
     toggleAccount(accountInitialValues.signup);
   };
 
+  const [userProfile, setUserProfile] = useState({
+    name: '',
+    email: '',
+    username: '',
+    password: '',
+    phone: ''
+  });
 
   // Local storage implementation begin here
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
-  const [signupName, setSignupName] = useState("");
-  const [signupEmail, setSignupEmail] = useState("");
-  const [singupPassword, setSignupPassword] = useState("");
-  const [signupUsername, setSignupUsername] = useState("");
-  const [signupPhone, setSignupPhone] = useState("");
-
   const handleSignup = () => {
     if (
-      signupName !== "" &&
-      signupEmail !== "" &&
-      singupPassword !== "" &&
-      signupUsername !== " " &&
-      signupPhone !== ""
+      userProfile.name !== "" &&
+      userProfile.email !== "" &&
+      userProfile.password !== "" &&
+      userProfile.username !== " " &&
+      userProfile.phone !== ""
     ) {
-      localStorage.setItem("name", signupName);
-      localStorage.setItem("email", signupEmail);
-      localStorage.setItem("password", singupPassword);
-      localStorage.setItem("phone", signupPhone);
-      localStorage.setItem("username", signupUsername);
+      const profileData = {
+        name: userProfile.name,
+        email: userProfile.email,
+        password: userProfile.password,
+        username: userProfile.username,
+        phone: userProfile.phone
+      }
+      localStorage.setItem("userProfile", JSON.stringify(profileData));
 
       alert("Account created successfuly");
       // window.location.reload();
@@ -133,16 +137,15 @@ const LoginDialog = (props) => {
     }
   };
 
-  const handleLogin = (userData) => {
-    if(userData){
-      dispatch(setLoginStatus(true));
-    } 
+  const handleLogin = () => {
+    const storedProfile = JSON.parse(localStorage.getItem('userProfile'));
     if (
-      loginEmail === localStorage.getItem('email') && loginPassword === localStorage.getItem('password')) {
-      alert("Welcome back🙏, Logged In successfully");
-      localStorage.setItem("signup", localStorage.getItem("name"));
+      storedProfile && loginEmail === storedProfile.email && loginPassword === storedProfile.password) {
+      alert("Welcome back, Logged In successfully");
+      dispatch(setLoginStatus(true));
       props.setOpen(false);
-      props.setAccountPresent(true);
+      /* props.onLoginSuccess(); */
+      /* props.setAccountPresent(true); */
     } else {
       alert("Enter valid credential");
     }
@@ -168,13 +171,15 @@ const LoginDialog = (props) => {
                 variant="standard"
                 onChange={(e) => setLoginEmail(e.target.value)}
                 name="name"
-                label="Enter Email/Mobile number"
+                label="Enter Email Id."
+                type="email"
               />
               <TextField
                 variant="standard"
                 onChange={(e) => setLoginPassword(e.target.value)}
                 name="password"
                 label="Enter Password"
+                type="password"
               />
               <Text>
                 By continuing, you agree to ShopNow's Terms of Use and Privacy
@@ -191,31 +196,32 @@ const LoginDialog = (props) => {
             <Wrapper>
               <TextField
                 variant="standard"
-                onChange={(e) => setSignupName(e.target.value)}
+                onChange={(e) => setUserProfile({...userProfile, name: e.target.value})}
                 name="name"
                 label="Enter name"
               />
               <TextField
                 variant="standard"
-                onChange={(e) => setSignupUsername(e.target.value)}
+                onChange={(e) => setUserProfile({...userProfile, username: e.target.value})}
                 name="username"
                 label="Enter Username"
               />
               <TextField
                 variant="standard"
-                onChange={(e) => setSignupEmail(e.target.value)}
+                onChange={(e) => setUserProfile({...userProfile, email: e.target.value})}
                 name="email"
                 label="Enter Email"
               />
               <TextField
                 variant="standard"
-                onChange={(e) => setSignupPassword(e.target.value)}
+                onChange={(e) => setUserProfile({...userProfile, password: e.target.value})}
                 name="password"
                 label="Enter Password"
+                type="password"
               />
               <TextField
                 variant="standard"
-                onChange={(e) => setSignupPhone(e.target.value)}
+                onChange={(e) => setUserProfile({...userProfile, phone: e.target.value})}
                 name="phone"
                 label="Enter Phone"
               />

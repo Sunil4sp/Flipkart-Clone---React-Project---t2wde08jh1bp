@@ -64,7 +64,7 @@ const Text = styled(Typography)`
 
 const Slide = (props) => {
     const { title } = props
-    let items = useSelector((state) => state.allCart.item);
+    let items = useSelector((state) => state.cart.item);
     
     if (props.filterText) {
         if (props.filterText === "smartphones"){

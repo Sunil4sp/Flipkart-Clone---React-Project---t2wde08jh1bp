@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const ProfileManager = () => {
   // State to manage user profile data
@@ -10,6 +10,15 @@ const ProfileManager = () => {
   });
 
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(()=>{
+    const storedProfile = JSON.parse(localStorage.getItem('userProfile'));
+    console.log(storedProfile);
+    
+    if(storedProfile){
+      setProfile(storedProfile)
+    }
+  },[]);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -24,6 +33,7 @@ const ProfileManager = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Profile updated:', profile);
+    localStorage.setItem('userProfile',JSON.stringify(profile));
     setIsEditing(false);
     // Here you would typically make an API call to save the updated profile
   };

@@ -4,6 +4,8 @@ const initialState = {
     name: "",
     address: "",
     phoneNumber: "",
+    userName: "",
+    email: "",
     isLoggedIn: false, // To track login status
   };
 
@@ -12,10 +14,12 @@ export const userSlice = createSlice ({
     initialState,
     reducers: {
         setUserDetails: (state, action) => {
-        const { name, address, phoneNumber } = action.payload;
+        const { name, address, phoneNumber, userName, email } = action.payload;
         state.name = name;
         state.address = address;
         state.phoneNumber = phoneNumber;
+        state.userName  = userName;
+        state.email = email;
         },
         setLoginStatus: (state, action) => {
         state.isLoggedIn = action.payload; // Set login status
@@ -24,6 +28,7 @@ export const userSlice = createSlice ({
         state.name = "";
         state.address = "";
         state.phoneNumber = "";
+        state.userName = "";
         state.isLoggedIn = false; // Optionally clear login status
         },
     },

@@ -1,5 +1,5 @@
 import { Box, Typography, Button, Grid, styled } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem";
@@ -45,14 +45,18 @@ const StyledButton = styled(Button)`
 
 const Cart = () => {
   const { cart, totalPrice, totalQuantity } = useSelector(
-    (state) => state.allCart
+    (state) => state.cart
   );
+
+  const [open, setOpen] = useState(false); 
+  const { isLoggedIn } = useSelector((state) => state.user);
+  /* console.log(isLoggedIn); */
+  
   const navigate = useNavigate();
+  
   const goToPlaceOrder = () => {
-    let username = localStorage.getItem("userName");
-    console.log(username);
-    if (username === "") {
-      navigate("/login");
+    if (!isLoggedIn) {
+      setOpen(true);
     } else {
       navigate("/shipping");
     }

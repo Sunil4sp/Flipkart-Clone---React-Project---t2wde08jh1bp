@@ -37,7 +37,7 @@ const Search = () => {
 
   const [text, setText] = useState('');
   const [productData, setProductData] = useState([]);
-  const items =  useSelector((state) => state.allCart.item);
+  const items =  useSelector((state) => state.cart.item);
   useEffect(() => {
     setProductData(items);
   }, [items]);
