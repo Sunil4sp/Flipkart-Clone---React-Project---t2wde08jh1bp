@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+/* import { store } from '../../app/store';*/
+import { setLoginStatus } from "../../feature/userSlice"; 
 import NavBar from './NavBar';
 import Banner from './Banner';
 import Slide from './Slide';
@@ -14,20 +16,35 @@ const Component = styled(Box)({
 
 const Home = () => { 
 
-  const [openLogin, setOpenLogin] = useState(true);
-  const { isLoggedIn } = useSelector((state) => state.user); 
+  const dispatch = useDispatch();
+  const {isLoggedIn} = useSelector((state) => state.user);
+  console.log(isLoggedIn);
+
+  const [openLogin, setOpenLogin] = useState(!isLoggedIn);
+  
+  const handleLogin = () =>{
+    dispatch(setLoginStatus(true));
+    setOpenLogin(false);
+    console.log(setOpenLogin);
+  }
+
   return (
     <>
-    {!isLoggedIn ? (<LoginDialog open={openLogin} setOpen={setOpenLogin}/>) :
-    ( 
-    <><NavBar />
+    {!isLoggedIn && (
+      <LoginDialog open={openLogin} setOpen={setOpenLogin} onLogin= {handleLogin}/>
+    )} 
+
+    {isLoggedIn && ( 
+      <>
+      <NavBar />
       <Component>
         <Banner />
         <MidSlides title="Best of Smartphones" timer={false} autoPlay={false} filterText= {"smartphones"}/>
         <Slide title="Top Deals on Laptops" timer={false} autoPlay={false} filterText = {"laptops"} />
         <Slide title="Season's Top Pick" timer={false} autoPlay={false}  />
       </Component>
-      </> )}
+      </> 
+      )}
     </>
     
   )

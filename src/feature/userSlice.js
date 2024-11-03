@@ -1,8 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const getUserData = () => {
+
+    const localUserData = localStorage.getItem("userProfile");
+    if (!localUserData) return [];
+    try {
+      const parsedData = JSON.parse(localUserData);
+      return Array.isArray(parsedData) ? parsedData : [];
+    } catch {
+      return [];
+    }
+  };
+
 const initialState = {
+    user: getUserData(),
     name: "",
-    address: "",
     phoneNumber: "",
     userName: "",
     email: "",
@@ -14,15 +26,15 @@ export const userSlice = createSlice ({
     initialState,
     reducers: {
         setUserDetails: (state, action) => {
-        const { name, address, phoneNumber, userName, email } = action.payload;
+        const { name, phoneNumber, userName, email } = action.payload;
         state.name = name;
-        state.address = address;
         state.phoneNumber = phoneNumber;
         state.userName  = userName;
         state.email = email;
         },
         setLoginStatus: (state, action) => {
-        state.isLoggedIn = action.payload; // Set login status
+            /* const { isLoggedIn } = action.payload; */
+            state.isLoggedIn = action.payload; // Set login status
         },
         clearUserDetails: (state) => {
         state.name = "";
@@ -34,6 +46,10 @@ export const userSlice = createSlice ({
     },
 });
 
-export const { setUserDetails, setLoginStatus, clearUserDetails } = userSlice.actions;
+export const { 
+    setUserDetails, 
+    setLoginStatus, 
+    clearUserDetails, 
+} = userSlice.actions;
 
 export default userSlice.reducer;

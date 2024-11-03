@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
-import { setLoginStatus } from "../../feature/userSlice";
+import { setLoginStatus, setUserDetails } from "../../feature/userSlice";
 import {
   Dialog,
   Box,
@@ -84,7 +84,7 @@ const accountInitialValues = {
   },
 };
 
-//funtion starts
+//function starts
 //{open, setOpen} getting as props
 const LoginDialog = (props) => {
   
@@ -104,7 +104,8 @@ const LoginDialog = (props) => {
     email: '',
     username: '',
     password: '',
-    phone: ''
+    phone: '',
+    isLoggedIn: false
   });
 
   // Local storage implementation begin here
@@ -128,7 +129,9 @@ const LoginDialog = (props) => {
         phone: userProfile.phone
       }
       localStorage.setItem("userProfile", JSON.stringify(profileData));
-
+      dispatch(setUserDetails(profileData));
+      dispatch(setLoginStatus(true));
+      
       alert("Account created successfuly");
       // window.location.reload();
       handleClose();
@@ -140,13 +143,17 @@ const LoginDialog = (props) => {
   const handleLogin = () => {
     const storedProfile = JSON.parse(localStorage.getItem('userProfile'));
     if (
-      storedProfile && loginEmail === storedProfile.email && loginPassword === storedProfile.password) {
-      alert("Welcome back, Logged In successfully");
+      storedProfile && 
+      loginEmail === storedProfile.email && 
+      loginPassword === storedProfile.password
+      ) {
+      dispatch(setUserDetails(storedProfile));
       dispatch(setLoginStatus(true));
+       
+      alert("Welcome back, Logged In successfully");
       props.setOpen(false);
-      /* props.onLoginSuccess(); */
-      /* props.setAccountPresent(true); */
-    } else {
+    } 
+    else {
       alert("Enter valid credential");
     }
   };

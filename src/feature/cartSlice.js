@@ -84,7 +84,6 @@ export const {
   getCartTotal,
   increaseItemQuantity,
   decreaseItemQuantity,
-  setLoginStatus,
   clearCart,
 } = cartSlice.actions;
 

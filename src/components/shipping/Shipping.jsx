@@ -104,6 +104,8 @@ const Shipping = () => {
     };
     dispatch(setUserDetails(userData));
     dispatch(setLoginStatus(true)); // Set user as logged in
+    console.log(setLoginStatus);
+    
     setOpen(false);
   };
 
