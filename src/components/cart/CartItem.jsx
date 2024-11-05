@@ -53,7 +53,7 @@ const CartItem = ({ item={}, totalQuantity, totalprice, quantity, price }) => {
     console.log("Cart from Redux state:", cart);
 
     useEffect(() => {
-        if(cart){
+        if(!cart){
              localStorage.setItem("shoppingCart", JSON.stringify(cart));
         }
     }, [cart])

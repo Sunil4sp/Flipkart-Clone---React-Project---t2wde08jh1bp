@@ -1,10 +1,13 @@
 import { Box, Typography, Button, Grid, styled } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { setLoginStatus } from "../../feature/userSlice";
+import { clearCart, getCartTotal } from "../../feature/cartSlice"; 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem";
 import EmptyCart from "./EmptyCart";
 import TotalView from "./TotalView";
+import LoginDialog from "../login/LoginDialog";
 
 const Component = styled(Grid)(({ theme }) => ({
   padding: "30px 135px",
@@ -47,20 +50,30 @@ const Cart = () => {
   const { cart, totalPrice, totalQuantity } = useSelector(
     (state) => state.cart
   );
-
-  /* const dispatch = useDispatch(); */
-  const [open, setOpen] = useState(false); 
   const { isLoggedIn } = useSelector((state) => state.user);
-  console.log(isLoggedIn);
-  
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false); 
+
+  useEffect(() => {
+    dispatch(getCartTotal());
+  }, [cart, dispatch]);
+
+  const handleLogin = () =>{
+    dispatch(setLoginStatus(true));
+    setOpen(false);
+  }
   
   const goToPlaceOrder = () => {
-    if (!isLoggedIn) {
-      setOpen(true);
-      navigate("/login")
-    } else {
+    if (isLoggedIn) {
       navigate("/shipping");
+      localStorage.setItem('shoppingCart',JSON.stringify(cart));
+      /* localStorage.removeItem("shopping"); */
+      dispatch(clearCart());
+      navigate("/");
+      /* window.location.reload(); */
+    } else {
+      setOpen(true);
     }
   };
   return (
@@ -86,9 +99,16 @@ const Cart = () => {
               ))}
             </div>
             <BottomWrapper>
+              {isLoggedIn ? (
               <StyledButton onClick={goToPlaceOrder} variant="contained">
                 Place Order
               </StyledButton>
+              ) :(
+              <Typography variant="body2" color="error">
+                Please log in to place an order.
+                <LoginDialog open={open} setOpen={setOpen} onLogin= {handleLogin}/>
+              </Typography>
+            )}
             </BottomWrapper>
           </LeftComponent>
           <Grid item lg={3} md={3} sm={12} xs={12}>

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React/* , { useState, useEffect } */ from "react";
+/* import { useSelector, useDispatch } from "react-redux";
 import { setUserDetails ,setLoginStatus } from "../../feature/userSlice";
 import { useNavigate } from "react-router-dom";
 import TotalView from "../cart/TotalView";
-import LoginDialog from '../login/LoginDialog';
+import LoginDialog from '../login/LoginDialog'; */
 
-import {
+/* import {
   Box,
   Typography,
   Button,
@@ -72,14 +72,14 @@ const COD = styled(Typography)({
   flexDirection: "row-reverse",
   color: "#878787",
 });
-
+ */
 const Shipping = () => {
-  const [userName, setUserName] = useState("");
+  /* const [userName, setUserName] = useState("");
   const [userAddress, setUserAddress] = useState("");
   const [userPhone, setUserPhone] = useState('');
 
   /* const [ accountPresent, setAccountPresent] = useState(true); */
-  const [open, setOpen] = useState(false);
+  /*const [open, setOpen] = useState(false);
 
   const { cart, totalPrice, totalQuantity } = useSelector(
     (state) => state.cart
@@ -127,7 +127,7 @@ const Shipping = () => {
       window.location.reload();
     } else 
         /* alert("Please Login to place order");
-        navigate("/login"); */
+        navigate("/login");
         alert("Please fill in all details to place the order.");
   };
 
@@ -193,7 +193,11 @@ const Shipping = () => {
     </Component>
     <LoginDialog open={open} setOpen={setOpen} onLoginSuccess={handleUpdateUser} />
     </>
-  );
+  ); */
+  return(
+    <div style={{margin: '280px 320px', padding: '30px'}}> Congratulations ! your order has been placed.
+    </div>
+  )
 };
 
 export default Shipping;

@@ -172,3 +172,54 @@
   color: #000;
   font-size: 30px;
 }
+
+.profilePage{
+  padding: 20px;
+  max-width: 400px;
+  margin: 100px auto;
+  background-color: #f2f2f2;
+  box-shadow: 2px 5px 5px 5px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: none;
+  justify-content: space-between;
+}
+
+.flex-container{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.flex-item{     
+  display: flex;
+}
+
+.flex-smallColumn{
+  width: 180px;
+  flex: 1.5;
+  padding: 10px;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+.flex-bigColumn{
+  flex: 3;
+  padding: 10px;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+.flex-item-b{
+  width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-item-button{
+  align-items: center;
+  justify-content: space-around;
+}

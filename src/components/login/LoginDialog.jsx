@@ -194,9 +194,10 @@ const LoginDialog = (props) => {
               </Text>
               <LoginButton onClick={handleLogin}>Login</LoginButton>
               <Typography style={{ textAlign: "center" }}>OR</Typography>
-              <RequestOTP>Request OTP</RequestOTP>
+              {/* <RequestOTP>Request OTP</RequestOTP> */}
+              <Typography style={{ textAlign: "center" }}>New to ShopNow | Signup?</Typography>
               <CreateAccount onClick={toggleSignup}>
-                New to ShopNow? Create an account
+                 {/* <br></br> */}Create an account
               </CreateAccount>
             </Wrapper>
           ) : (
