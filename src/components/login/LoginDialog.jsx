@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setLoginStatus, setUserDetails } from "../../feature/userSlice";
 import {
   Dialog,
@@ -88,6 +88,7 @@ const accountInitialValues = {
 //{open, setOpen} getting as props
 const LoginDialog = (props) => {
   
+  const {isLoggedIn} = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [account, toggleAccount] = useState(accountInitialValues.login);
 
@@ -158,6 +159,7 @@ const LoginDialog = (props) => {
     }
   };
 
+  if (!isLoggedIn) {
   return (
     <Dialog
       open={props.open}
@@ -239,7 +241,10 @@ const LoginDialog = (props) => {
         </Box>
       </Component>
     </Dialog>
-  );
+    )
+    }
+    else {
+      return null; // Do not render anything if the user is logged in
+    }
 };
-
 export default LoginDialog;

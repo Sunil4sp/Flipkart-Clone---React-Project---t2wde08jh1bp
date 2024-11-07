@@ -2,6 +2,7 @@ import { Box, Typography, Button, Grid, styled } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { setLoginStatus } from "../../feature/userSlice";
 import { clearCart, getCartTotal } from "../../feature/cartSlice"; 
+import { placeOrder } from "../../feature/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem";
@@ -47,35 +48,69 @@ const StyledButton = styled(Button)`
 `;
 
 const Cart = () => {
-  const { cart, totalPrice, totalQuantity } = useSelector(
-    (state) => state.cart
-  );
+  const { cart, totalPrice, totalQuantity } = useSelector((state) => state.cart);
   const { isLoggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false); 
 
   useEffect(() => {
+   if (cart.length > 0) {
+    localStorage.setItem('shoppingCart', JSON.stringify(cart));
+   }
+  }, [cart,dispatch]);
+
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem('shoppingCart'));
+    if (storedCart) {
+      // Dispatch to set the cart state from localStorage
+      dispatch({ type: 'cart/setCart', payload: storedCart });
+    }
+    // Recalculate cart totals
     dispatch(getCartTotal());
-  }, [cart, dispatch]);
+  }, [dispatch]);
 
   const handleLogin = () =>{
     dispatch(setLoginStatus(true));
     setOpen(false);
   }
   
-  const goToPlaceOrder = () => {
+  /* const goToPlaceOrder = () => {
     if (isLoggedIn) {
       navigate("/shipping");
       localStorage.setItem('shoppingCart',JSON.stringify(cart));
       /* localStorage.removeItem("shopping"); */
-      dispatch(clearCart());
+      /* dispatch(clearCart());
       navigate("/");
-      /* window.location.reload(); */
+      /* window.location.reload();
+    } else {
+      setOpen(true);
+    }
+  }; */
+  const handlePlaceOrder = () => {
+    if (isLoggedIn) {
+      // Create a new order with cart data
+      const newOrder = {
+        orderId: Date.now(), // Unique order ID
+        items: cart, // Cart items
+        date: new Date().toLocaleString(), // Order date
+        status: "Shipped", // Set the order status to Shipped
+      };
+
+      // Dispatch the action to place the order and add it to the orders state
+      dispatch(placeOrder(newOrder));
+      /* console.log(placeOrder(newOrder)); */
+      dispatch(clearCart()); // Clear the cart
+
+      // Navigate to the home page
+      navigate("/");
+      // Optionally, show a confirmation message
+      alert('Your order has been placed!');
     } else {
       setOpen(true);
     }
   };
+
   return (
     <>
       {cart.length > 0 ? (
@@ -100,12 +135,12 @@ const Cart = () => {
             </div>
             <BottomWrapper>
               {isLoggedIn ? (
-              <StyledButton onClick={goToPlaceOrder} variant="contained">
+              <StyledButton onClick={handlePlaceOrder} variant="contained">
                 Place Order
               </StyledButton>
               ) :(
               <Typography variant="body2" color="error">
-                Please log in to place an order.
+                {alert("Please log in to place an order.")}
                 <LoginDialog open={open} setOpen={setOpen} onLogin= {handleLogin}/>
               </Typography>
             )}

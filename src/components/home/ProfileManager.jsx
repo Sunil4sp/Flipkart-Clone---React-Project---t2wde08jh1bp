@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { placeOrder } from '../../feature/orderSlice';
 import { clearCart } from '../../feature/cartSlice';
+import LoginDialog from '../login/LoginDialog';
 import '../../App.css';
 
 const ProfileManager = () => {
@@ -14,21 +15,26 @@ const ProfileManager = () => {
     phone: '',
   });
   
+  const [openLoginDialog, setOpenLoginDialog] = useState(false);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [isEditing, setIsEditing] = useState(false);
   const [cartData, setCartData] = useState([]);
-  const [orders, setOrders] = useState([]);
+  const [ordersFromLocalStorage, setOrdersFromLocalStorage] = useState([]);
   const [selectedAction, setSelectedAction] = useState('');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
-  /* const totalPrice = useSelector((state) => state.cart.totalPrice);
-  const totalQuantity = useSelector((state) => state.cart.totalQuantity); */
+  const orders = useSelector((state) =>state.orders || []);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setOpenLoginDialog(true); // Open the login dialog if not logged in
+    }
+  }, [isLoggedIn]);
 
   useEffect(()=>{
     const storedProfile = JSON.parse(localStorage.getItem('userProfile'));
-    console.log(storedProfile);
-    
     if(storedProfile){
       setProfile(storedProfile)
     }
@@ -36,12 +42,14 @@ const ProfileManager = () => {
     const storedCart = JSON.parse(localStorage.getItem('shoppingCart'));
     if (storedCart) {
       setCartData(storedCart);
+      /* dispatch(clearCart()); */
     }
 
     // Retrieve orders from localStorage (if available)
     const storedOrders = JSON.parse(localStorage.getItem('orders')) || [];
-    setOrders(storedOrders);
-
+    if (storedOrders){
+      setOrdersFromLocalStorage(storedOrders);
+    }
   },[]);
 
 
@@ -59,8 +67,8 @@ const ProfileManager = () => {
     e.preventDefault();
     /* console.log('Profile updated:', profile); */
     localStorage.setItem('userProfile',JSON.stringify(profile));
+    /* console.log(profile); */
     setIsEditing(false);
-    // Here you would typically make an API call to save the updated profile
   };
 
   const logout = (e) =>{
@@ -68,7 +76,7 @@ const ProfileManager = () => {
     localStorage.removeItem("userProfile");
     localStorage.removeItem("shoppingCart");
     localStorage.removeItem("orders");
-    dispatch(clearCart);
+    dispatch(clearCart());
     navigate("/");
     /* window.location.reload(); */
   }
@@ -83,14 +91,14 @@ const ProfileManager = () => {
 
       // Dispatch the action to save the order in the store
       dispatch(placeOrder(newOrder));
-
-      // Optionally, clear the cart after placing the order
       dispatch(clearCart());
-
+      
       // Update the localStorage with the new orders
       const updatedOrders = [...orders, newOrder];
       localStorage.setItem('orders', JSON.stringify(updatedOrders));
-      setOrders(updatedOrders);
+      setOrdersFromLocalStorage(updatedOrders);
+      console.log(updatedOrders);
+      
 
       // Redirect or show confirmation message
       alert('Your order has been placed!');
@@ -103,12 +111,15 @@ const ProfileManager = () => {
   const handleActionChange = (e) => {
     const selectedValue = e.target.value;
     setSelectedAction(selectedValue);
-
+    console.log("Selected Action:", selectedValue);
+    
     switch (selectedValue) {
       case 'edit':
         setIsEditing(true);
         break;
       case 'orders':
+        /* handlePlaceOrder(); */
+        setIsEditing(false);
         break; // No action needed here, orders will be displayed below
       case 'logout':
         logout();
@@ -120,21 +131,21 @@ const ProfileManager = () => {
   };
 
   return (
+    <>
+    {!isLoggedIn && <LoginDialog open={openLoginDialog} setOpen={setOpenLoginDialog} />}
     <div className="profilePage">
       <h2>Profile</h2>
       
       {/* Dropdown Menu */}
-      <div /* style={{ marginBottom: '20px' }} */>
-        <select
-          onChange={handleActionChange} value={selectedAction}
-        >
-          <option value="">Select an action</option>
+     <div>
+        <select onChange={handleActionChange} value={selectedAction}>
+          <option defaultValue="">Select an action</option>
           <option value="edit">Edit Profile</option>
           <option value="orders">Your Orders</option>
           <option value="logout">Logout</option>
         </select>
       </div>
-
+    
       {/* Profile Form or Profile Details */}
       {isEditing ? (
         <form onSubmit={handleSubmit} className='flex-container'>
@@ -206,6 +217,8 @@ const ProfileManager = () => {
       {selectedAction === 'orders' && (
         <div>
           <h3>Your Orders</h3>
+          {console.log(orders.length)
+          }
           {orders.length > 0 ? (
             <ul>
               {orders.map((order) => (
@@ -215,7 +228,7 @@ const ProfileManager = () => {
                   <ul>
                     {order.items.map((item, index) => (
                       <li key={index}>
-                        <p>{item.title} - ${item.price}</p>
+                        <p>{item.title} - ₹ {Math.round(30 * item.price-50)}</p>
                       </li>
                     ))}
                   </ul>
@@ -229,11 +242,11 @@ const ProfileManager = () => {
       )}
 
       {/* Cart to Orders button */}
-      {cart.length > 0 && !isEditing && selectedAction !== 'orders' && (
+      {cart.length > 0 && !isEditing && selectedAction === 'orders' && (
         <button onClick={handlePlaceOrder}>Place Order</button>
       )}
     </div>
-    
+    </>
   );
 };
 

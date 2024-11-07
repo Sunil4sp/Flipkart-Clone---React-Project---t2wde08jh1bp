@@ -190,13 +190,15 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: space-around;
   padding: 10px;
 }
 
 .flex-item{     
   display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .flex-smallColumn{
@@ -222,4 +224,17 @@
 .flex-item-button{
   align-items: center;
   justify-content: space-around;
+}
+
+.flex-item-edit{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.flex-item-edit p{
+  display: flex;
+  padding: none;
 }
