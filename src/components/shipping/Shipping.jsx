@@ -1,79 +1,22 @@
-import React/* , { useState, useEffect } */ from "react";
-/* import { useSelector, useDispatch } from "react-redux";
-import { setUserDetails ,setLoginStatus } from "../../feature/userSlice";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import TotalView from "../cart/TotalView";
-import LoginDialog from '../login/LoginDialog'; */
+import { clearCart } from "../../feature/cartSlice"; 
+import { useDispatch } from "react-redux";
 
-/* import {
-  Box,
-  Typography,
-  Button,
-  FormControl,
-  InputLabel,
-  Card,
-  Input,
-  Grid,
-  styled,
-  FormGroup,
-} from "@mui/material";
-
-
-const OuterComponent = styled(Card)`
-  border-top: 2px solid #f0f0f0;
-  border-radius: 0px;
-  display: flex;
-`;
-
-const Component = styled(Grid)(({ theme }) => ({
-  padding: "30px 135px",
-  display: "flex",
-  [theme.breakpoints.down("md")]: {
-    padding: "15px 0",
-  },
-}));
-
-const LeftComponent = styled(Grid)(({ theme }) => ({
-  paddingRight: 15,
-  [theme.breakpoints.down("sm")]: {
-    marginBottom: 15,
-  },
-}));
-
-const Header = styled(Box)`
-  padding: 15px 24px;
-  background: #fff;
-`;
-
-const BottomWrapper = styled(Box)`
-  padding: 16px 22px;
-  background: #fff;
-  box-shadow: 0 -2px 10px 0 rgb(0 0 0 / 10%);
-  border-top: 1px solid #f0f0f0;
-`;
-
-const StyledButton = styled(Button)`
-  display: flex;
-  margin-left: auto;
-  background: #fb641b;
-  color: #fff;
-  border-radius: 2px;
-  width: 250px;
-  height: 51px;
-`;
-
-const FormInput = styled(FormControl)({
-  margin: "15px 0",
-});
-
-const COD = styled(Typography)({
-  margin: "30px 50px",
-  display: "flex",
-  flexDirection: "row-reverse",
-  color: "#878787",
-});
- */
 const Shipping = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    const timeOut = setTimeout(() => {
+    navigate('/');
+  }, 1500);
+
+  dispatch(clearCart());
+
+  return () => clearTimeout(timeOut);
+  }, [dispatch, navigate]);
+
   /* const [userName, setUserName] = useState("");
   const [userAddress, setUserAddress] = useState("");
   const [userPhone, setUserPhone] = useState('');
@@ -195,7 +138,7 @@ const Shipping = () => {
     </>
   ); */
   return(
-    <div style={{margin: '280px 320px', padding: '30px'}}> Congratulations ! your order has been placed.
+    <div style={{margin: '280px 400px', padding: '30px'}}> Congratulations ! your order has been placed successfully.
     </div>
   )
 };

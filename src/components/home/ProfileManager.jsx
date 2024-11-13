@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { placeOrder } from '../../feature/orderSlice';
+/* import { placeOrder } from '../../feature/orderSlice'; */
 import { clearCart } from '../../feature/cartSlice';
 import LoginDialog from '../login/LoginDialog';
 import '../../App.css';
@@ -13,6 +13,7 @@ const ProfileManager = () => {
     name: '',
     email: '',
     phone: '',
+    /* address: '' */
   });
   
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
@@ -24,8 +25,8 @@ const ProfileManager = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart.cart);
-  const orders = useSelector((state) =>state.orders || []);
+
+  /* const orders = useSelector((state) =>state.order.orders || []); */
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -46,7 +47,8 @@ const ProfileManager = () => {
     }
 
     // Retrieve orders from localStorage (if available)
-    const storedOrders = JSON.parse(localStorage.getItem('orders')) || [];
+    const storedOrders = JSON.parse(localStorage.getItem('orders'));
+    console.log('Stored Orders:', storedOrders);
     if (storedOrders){
       setOrdersFromLocalStorage(storedOrders);
     }
@@ -76,12 +78,13 @@ const ProfileManager = () => {
     localStorage.removeItem("userProfile");
     localStorage.removeItem("shoppingCart");
     localStorage.removeItem("orders");
+    localStorage.removeItem("isLoggedIn");
     dispatch(clearCart());
     navigate("/");
     /* window.location.reload(); */
   }
 
-  const handlePlaceOrder = () => {
+  /* const handlePlaceOrder = () => {
     if (cart.length > 0) {
       const newOrder = {
         orderId: Date.now(), // Generate a unique order ID based on timestamp
@@ -105,7 +108,7 @@ const ProfileManager = () => {
     } else {
       alert('Your cart is empty!');
     }
-  };
+  }; */
 
   // Handle action selection from dropdown
   const handleActionChange = (e) => {
@@ -217,23 +220,34 @@ const ProfileManager = () => {
       {selectedAction === 'orders' && (
         <div>
           <h3>Your Orders</h3>
-          {console.log(orders.length)
-          }
-          {orders.length > 0 ? (
+          {ordersFromLocalStorage && ordersFromLocalStorage.length > 0 ? (
             <ul>
-              {orders.map((order) => (
+              {ordersFromLocalStorage.map((order) => (
                 <li key={order.orderId}>
                   <p>Order ID: {order.orderId}</p>
-                  <p>Date: {order.date}</p>
+                  <p>Order Date: {order.date}</p>
+                  {console.log('Order Items:', order.items)}
                   <ul>
-                    {order.items.map((item, index) => (
+                  {Array.isArray(order.items) && order.items.length > 0 ? (
+                        order.items.map((item, index) => (
+                          <li key={index}>
+                            <p>{item.title} - ₹ {Math.round(30 * item.price - 50)}</p>
+                          </li>
+                        ))
+                      ) : (
+                        <p>No items in this order</p>
+                      )}
+                    </ul>
+                  </li>
+                ))}
+                    {/* {order.items.map((item, index) => (
                       <li key={index}>
                         <p>{item.title} - ₹ {Math.round(30 * item.price-50)}</p>
                       </li>
-                    ))}
+                    ))} 
                   </ul>
                 </li>
-              ))}
+              ))}*/}
             </ul>
           ) : (
             <p>No orders yet.</p>
@@ -242,9 +256,9 @@ const ProfileManager = () => {
       )}
 
       {/* Cart to Orders button */}
-      {cart.length > 0 && !isEditing && selectedAction === 'orders' && (
+     {/*  {cart.length > 0 && !isEditing && selectedAction === 'orders' && (
         <button onClick={handlePlaceOrder}>Place Order</button>
-      )}
+      )} */}
     </div>
     </>
   );

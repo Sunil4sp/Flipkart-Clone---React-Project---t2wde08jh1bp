@@ -50,7 +50,7 @@ const StyledButton = styled(Button)`
 const CartItem = ({ item={}, totalQuantity, totalprice, quantity, price }) => {
 
     const { cart } = useSelector((state) => state.cart);
-    console.log("Cart from Redux state:", cart);
+    /* console.log("Cart from Redux state:", cart); */
 
     useEffect(() => {
         if(!cart){

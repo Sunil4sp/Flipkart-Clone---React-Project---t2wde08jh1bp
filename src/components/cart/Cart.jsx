@@ -1,7 +1,7 @@
 import { Box, Typography, Button, Grid, styled } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { setLoginStatus } from "../../feature/userSlice";
-import { clearCart, getCartTotal } from "../../feature/cartSlice"; 
+import { getCartTotal } from "../../feature/cartSlice"; 
 import { placeOrder } from "../../feature/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -49,7 +49,7 @@ const StyledButton = styled(Button)`
 
 const Cart = () => {
   const { cart, totalPrice, totalQuantity } = useSelector((state) => state.cart);
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false); 
@@ -58,7 +58,7 @@ const Cart = () => {
    if (cart.length > 0) {
     localStorage.setItem('shoppingCart', JSON.stringify(cart));
    }
-  }, [cart,dispatch]);
+  }, [cart]);
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem('shoppingCart'));
@@ -75,20 +75,8 @@ const Cart = () => {
     setOpen(false);
   }
   
-  /* const goToPlaceOrder = () => {
-    if (isLoggedIn) {
-      navigate("/shipping");
-      localStorage.setItem('shoppingCart',JSON.stringify(cart));
-      /* localStorage.removeItem("shopping"); */
-      /* dispatch(clearCart());
-      navigate("/");
-      /* window.location.reload();
-    } else {
-      setOpen(true);
-    }
-  }; */
   const handlePlaceOrder = () => {
-    if (isLoggedIn) {
+    if (isLoggedIn ) {
       // Create a new order with cart data
       const newOrder = {
         orderId: Date.now(), // Unique order ID
@@ -96,16 +84,18 @@ const Cart = () => {
         date: new Date().toLocaleString(), // Order date
         status: "Shipped", // Set the order status to Shipped
       };
-
-      // Dispatch the action to place the order and add it to the orders state
+      /* console.log(isLoggedIn); */
       dispatch(placeOrder(newOrder));
-      /* console.log(placeOrder(newOrder)); */
-      dispatch(clearCart()); // Clear the cart
 
-      // Navigate to the home page
-      navigate("/");
-      // Optionally, show a confirmation message
-      alert('Your order has been placed!');
+      const storedOrders = JSON.parse(localStorage.getItem("orders")) || [];
+      storedOrders.push(newOrder);
+      localStorage.setItem("orders", JSON.stringify(storedOrders));
+      
+      const timeOut = setTimeout(()=>{
+        navigate('/shipping');
+      },1000);
+      
+      return () => clearTimeout(timeOut);
     } else {
       setOpen(true);
     }

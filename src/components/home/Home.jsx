@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 /* import { store } from '../../app/store';*/
 import { setLoginStatus } from "../../feature/userSlice"; 
+import Header from '../header/Header';
 import NavBar from './NavBar';
 import Banner from './Banner';
 import Slide from './Slide';
@@ -22,17 +23,22 @@ const Home = () => {
 
   useEffect(() => {
     const storedLoginStatus = JSON.parse(localStorage.getItem('isLoggedIn'));
+    console.log(storedLoginStatus);
+    
     if (storedLoginStatus) {
       dispatch(setLoginStatus(true)); // Update the Redux state if logged in
+    } 
+    else{
+      dispatch(setLoginStatus(false));
     }
   }, [dispatch]);
 
-  const [openLogin, setOpenLogin] = useState(!isLoggedIn);
+  const [openLogin, setOpenLogin] = useState(!setLoginStatus);
   
   const handleLogin = () =>{
     dispatch(setLoginStatus(true));
     setOpenLogin(false);
-    console.log(setOpenLogin);
+    /* console.log(setOpenLogin, isLoggedIn); */
     localStorage.setItem('isLoggedIn', JSON.stringify(true));
   };
 
@@ -49,6 +55,7 @@ const Home = () => {
 
     {isLoggedIn && ( 
       <>
+      <Header />
       <NavBar onLogout={handleLogout} />
       <Component>
         <Banner />

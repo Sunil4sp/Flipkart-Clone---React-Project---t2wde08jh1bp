@@ -23,9 +23,9 @@ function App() {
   return (
     <Context>
       <Router>
-        <Header />
         <Box style={{ marginTop: 54 }}>
           <Suspense fallback= {<div className="loading">Loading...</div>}>
+          <Header />
           <Routes>
               <Route exact path='/' element={<Home />} />
               <Route path='/products/category/:category' element={<CategoryPage />} />
@@ -35,9 +35,6 @@ function App() {
               <Route path='/shipping' element={<Shipping />} />
           </Routes>
           </Suspense>
-          {/* <Routes>
-              <Route path='/' element={<Home />} />
-          </Routes> */}
         </Box>
       </Router>
     </Context>

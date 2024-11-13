@@ -50,7 +50,7 @@ const LoginButton = styled(Button)`
   font-weight: 600;
 `;
 
-const RequestOTP = styled(Button)`
+/* const RequestOTP = styled(Button)`
   text-transform: none;
   background: #fff;
   color: #2874f0;
@@ -58,7 +58,7 @@ const RequestOTP = styled(Button)`
   border-radius: 2px;
   font-weight: 600;
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
-`;
+`; */
 const Text = styled(Typography)`
   color: #878787;
   font-size: 12px;
@@ -106,8 +106,10 @@ const LoginDialog = (props) => {
     username: '',
     password: '',
     phone: '',
-    isLoggedIn: false
   });
+
+  const [isLoginStatus, setIsLoginStatus] = useState(isLoggedIn);
+  /* console.log(isLoginStatus) */
 
   // Local storage implementation begin here
 
@@ -127,11 +129,16 @@ const LoginDialog = (props) => {
         email: userProfile.email,
         password: userProfile.password,
         username: userProfile.username,
-        phone: userProfile.phone
+        phone: userProfile.phone,
       }
       localStorage.setItem("userProfile", JSON.stringify(profileData));
       dispatch(setUserDetails(profileData));
-      dispatch(setLoginStatus(true));
+      
+      const loginStatusData = isLoginStatus;
+      console.log(loginStatusData);
+      
+      localStorage.setItem("isLoggedIn", JSON.stringify(loginStatusData));
+      dispatch(setLoginStatus(loginStatusData));
       
       alert("Account created successfuly");
       // window.location.reload();
@@ -143,14 +150,22 @@ const LoginDialog = (props) => {
 
   const handleLogin = () => {
     const storedProfile = JSON.parse(localStorage.getItem('userProfile'));
+    const storedLoginStatus = JSON.parse(localStorage.getItem('isLoggedIn'));
+    /* console.log(storedLoginStatus); */
+    const loginStatusData = !storedLoginStatus;
+    console.log(loginStatusData);
+    
     if (
       storedProfile && 
       loginEmail === storedProfile.email && 
       loginPassword === storedProfile.password
       ) {
+        
       dispatch(setUserDetails(storedProfile));
-      dispatch(setLoginStatus(true));
-       
+      dispatch(setLoginStatus(loginStatusData));
+      localStorage.setItem('isLoggedIn', JSON.stringify(loginStatusData));
+      console.log(loginStatusData);
+      
       alert("Welcome back, Logged In successfully");
       props.setOpen(false);
     } 
