@@ -64,7 +64,7 @@ const Shipping = () => {
       alert("✨Congratulation! Your Order has been Placed Successfully");
 
       setUserName("");
-      localStorage.removeItem("shoppingCart");
+      sessionStorage.removeItem("shoppingCart");
 
       navigate("/");
       window.location.reload();

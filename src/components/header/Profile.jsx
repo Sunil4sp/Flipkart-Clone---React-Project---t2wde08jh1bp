@@ -23,7 +23,7 @@ const Profile = ({ localUserName, setAccountPresent }) => {
     };
 
     const logout = () => {
-        localStorage.removeItem('signup');
+        sessionStorage.removeItem('signup');
         setAccountPresent(false);
         alert("Logged Out ✈ Successfully!")
     }

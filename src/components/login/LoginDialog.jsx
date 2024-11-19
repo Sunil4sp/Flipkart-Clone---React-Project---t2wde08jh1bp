@@ -109,14 +109,12 @@ const LoginDialog = (props) => {
   });
 
   const [isLoginStatus, setIsLoginStatus] = useState(isLoggedIn);
-  /* console.log(isLoginStatus) */
-
-  // Local storage implementation begin here
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
   const handleSignup = () => {
+    
     if (
       userProfile.name !== "" &&
       userProfile.email !== "" &&
@@ -131,13 +129,13 @@ const LoginDialog = (props) => {
         username: userProfile.username,
         phone: userProfile.phone,
       }
-      localStorage.setItem("userProfile", JSON.stringify(profileData));
+      sessionStorage.setItem("userProfile", JSON.stringify(profileData));
       dispatch(setUserDetails(profileData));
       
       const loginStatusData = isLoginStatus;
       console.log(loginStatusData);
       
-      localStorage.setItem("isLoggedIn", JSON.stringify(loginStatusData));
+      sessionStorage.setItem("isLoggedIn", JSON.stringify(loginStatusData));
       dispatch(setLoginStatus(loginStatusData));
       
       alert("Account created successfuly");
@@ -149,8 +147,8 @@ const LoginDialog = (props) => {
   };
 
   const handleLogin = () => {
-    const storedProfile = JSON.parse(localStorage.getItem('userProfile'));
-    const storedLoginStatus = JSON.parse(localStorage.getItem('isLoggedIn'));
+    const storedProfile = JSON.parse(sessionStorage.getItem('userProfile'));
+    const storedLoginStatus = JSON.parse(sessionStorage.getItem('isLoggedIn'));
     /* console.log(storedLoginStatus); */
     const loginStatusData = !storedLoginStatus;
     console.log(loginStatusData);
@@ -163,14 +161,20 @@ const LoginDialog = (props) => {
         
       dispatch(setUserDetails(storedProfile));
       dispatch(setLoginStatus(loginStatusData));
-      localStorage.setItem('isLoggedIn', JSON.stringify(loginStatusData));
+      sessionStorage.setItem('isLoggedIn', JSON.stringify(loginStatusData));
       console.log(loginStatusData);
       
       alert("Welcome back, Logged In successfully");
       props.setOpen(false);
     } 
     else {
-      alert("Enter valid credential");
+      const timeOut = setTimeout(()=>{
+        /* navigate('/signup'); */
+        alert("Enter valid credential or Signup again");
+      },1000);
+      
+      return () => clearTimeout(timeOut);
+      
     }
   };
 

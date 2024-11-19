@@ -172,17 +172,26 @@
   color: #000;
   font-size: 30px;
 }
+.profile_container{
+  background-color: whitesmoke; 
+  background-size: cover;
+  background-position: center;
+  height: auto; 
+  width: 100vw; 
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
 
 .profilePage{
   padding: 20px;
-  max-width: 400px;
-  margin: 100px auto;
+  /* max-width: 400px; */
+  margin: 50px auto;
   background-color: #f2f2f2;
   box-shadow: 2px 5px 5px 5px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  align-items: none;
   justify-content: space-between;
 }
 
@@ -237,4 +246,12 @@
 .flex-item-edit p{
   display: flex;
   padding: none;
+}
+
+.profile_heading{
+  display: flex;
+}
+
+.profile_heading h3{
+  padding: 5px 0;
 }

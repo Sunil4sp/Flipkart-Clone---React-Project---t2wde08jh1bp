@@ -60,7 +60,7 @@ const CustomButton = () => {
   //==================localStrorage
   /* const { isLoggedIn } = useSelector((state) => state.user); */
   const [accountPresent, setAccountPresent] = useState(false);
-  const localUserName = localStorage.getItem('signup');
+  const localUserName = sessionStorage.getItem('signup');
   
   const [open, setOpen] = useState(false);
 
@@ -74,7 +74,7 @@ const CustomButton = () => {
   
   useEffect(() => {
     dispatch(getCartTotal());
-    if (localStorage.getItem("signup") !== null) {
+    if (sessionStorage.getItem("signup") !== null) {
       setAccountPresent(true);
       /* setLoginStatus(true); */
     }

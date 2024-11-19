@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-
 import { Box, Typography, styled } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { getCartTotal } from '../../feature/cartSlice';

@@ -49,25 +49,53 @@ const StyledButton = styled(Button)`
 
 const Cart = () => {
   const { cart, totalPrice, totalQuantity } = useSelector((state) => state.cart);
-  const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
+  const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false); 
 
-  useEffect(() => {
+  /* seEffect(() => {
    if (cart.length > 0) {
-    localStorage.setItem('shoppingCart', JSON.stringify(cart));
+    sessionStorage.setItem('shoppingCart', JSON.stringify(cart));
+    
    }
   }, [cart]);
 
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem('shoppingCart'));
+    const storedCart = JSON.parse(sessionStorage.getItem('shoppingCart'));
     if (storedCart) {
-      // Dispatch to set the cart state from localStorage
-      dispatch({ type: 'cart/setCart', payload: storedCart });
+      // Dispatch to set the cart state from sessionStorage
+      dispatch({ type: 'cart', payload: storedCart });
     }
     // Recalculate cart totals
     dispatch(getCartTotal());
+  }, [dispatch]); */
+
+  useEffect(() => {
+    // Check if cart exists in sessionStorage and log its contents for debugging
+    const storedCart = sessionStorage.getItem('shoppingCart');
+    console.log("Stored Cart:", storedCart); // Debugging log
+
+    if (storedCart) {
+      try {
+        // Parse the cart from sessionStorage
+        const parsedCart = JSON.parse(storedCart);
+        console.log("Parsed Cart:", parsedCart); // Debugging log
+
+        // Only dispatch if parsedCart is an array
+        if (Array.isArray(parsedCart)) {
+          dispatch({ type: 'cart', payload: parsedCart });
+        } else {
+          console.error("Stored cart is not an array");
+        }
+      } catch (error) {
+        console.error("Error parsing stored cart:", error);
+      }
+    } /* else {
+      console.log("No items found in sessionStorage for cart");
+    } */
+
+    dispatch(getCartTotal()); // Recalculate cart totals
   }, [dispatch]);
 
   const handleLogin = () =>{
@@ -84,18 +112,18 @@ const Cart = () => {
         date: new Date().toLocaleString(), // Order date
         status: "Shipped", // Set the order status to Shipped
       };
-      /* console.log(isLoggedIn); */
-      dispatch(placeOrder(newOrder));
-
-      const storedOrders = JSON.parse(localStorage.getItem("orders")) || [];
-      storedOrders.push(newOrder);
-      localStorage.setItem("orders", JSON.stringify(storedOrders));
       
-      const timeOut = setTimeout(()=>{
+      const storedOrders = JSON.parse(sessionStorage.getItem("orders")) || [];
+        storedOrders.push(newOrder);
+        console.log(storedOrders);
+        sessionStorage.setItem("orders", JSON.stringify(storedOrders));
+        dispatch(placeOrder(newOrder));
+    
+      setTimeout(()=>{
         navigate('/shipping');
       },1000);
-      
-      return () => clearTimeout(timeOut);
+      /* sessionStorage.removeItem('shoppingCart'); 
+      return () => clearTimeout(timeOut);*/
     } else {
       setOpen(true);
     }

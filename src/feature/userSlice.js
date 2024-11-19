@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const getUserData = () => {
 
-    const localUserData = localStorage.getItem("userProfile");
+    const localUserData = sessionStorage.getItem("userProfile");
     if (!localUserData) return [];
     try {
       const parsedData = JSON.parse(localUserData);
@@ -18,6 +18,7 @@ const initialState = {
     phoneNumber: "",
     userName: "",
     email: "",
+    address: "",
     isLoggedIn: false, // To track login status
   };
 
@@ -36,6 +37,9 @@ export const userSlice = createSlice ({
             /* const { isLoggedIn } = action.payload; */
             state.isLoggedIn = action.payload; // Set login status
         },
+        setAddressDetails: (state, action) =>{
+            state.address = action.payload;
+        },
         clearUserDetails: (state) => {
         state.name = "";
         state.address = "";
@@ -48,7 +52,8 @@ export const userSlice = createSlice ({
 
 export const { 
     setUserDetails, 
-    setLoginStatus, 
+    setLoginStatus,
+    setAddressDetails, 
     clearUserDetails, 
 } = userSlice.actions;
 

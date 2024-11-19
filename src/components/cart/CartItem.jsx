@@ -50,19 +50,13 @@ const StyledButton = styled(Button)`
 const CartItem = ({ item={}, totalQuantity, totalprice, quantity, price }) => {
 
     const { cart } = useSelector((state) => state.cart);
-    /* console.log("Cart from Redux state:", cart); */
+    console.log("Cart from Redux state:", cart);
 
     useEffect(() => {
-        if(!cart){
-             localStorage.setItem("shoppingCart", JSON.stringify(cart));
+        if(cart){
+            sessionStorage.setItem("shoppingCart", JSON.stringify(cart));
         }
     }, [cart])
-
-    /* console.log("Item:", item);
-    console.log("Quantity:", quantity);
-    console.log("Total Price:", totalprice);
-    console.log("Total Quantity:", totalQuantity); */
-
 
     const fassured = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png';
 

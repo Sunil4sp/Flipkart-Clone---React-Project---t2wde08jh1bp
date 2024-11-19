@@ -16,17 +16,15 @@ const ProfileManager = () => {
     /* address: '' */
   });
   
+  const address = useSelector((state) => state.user.address);
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [isEditing, setIsEditing] = useState(false);
   const [cartData, setCartData] = useState([]);
   const [ordersFromLocalStorage, setOrdersFromLocalStorage] = useState([]);
   const [selectedAction, setSelectedAction] = useState('');
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  /* const orders = useSelector((state) =>state.order.orders || []); */
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -35,24 +33,22 @@ const ProfileManager = () => {
   }, [isLoggedIn]);
 
   useEffect(()=>{
-    const storedProfile = JSON.parse(localStorage.getItem('userProfile'));
+    const storedProfile = JSON.parse(sessionStorage.getItem('userProfile'));
     if(storedProfile){
       setProfile(storedProfile)
     }
 
-    const storedCart = JSON.parse(localStorage.getItem('shoppingCart'));
+    const storedCart = JSON.parse(sessionStorage.getItem('shoppingCart'));
     if (storedCart) {
       setCartData(storedCart);
-      /* dispatch(clearCart()); */
+      dispatch(clearCart()); 
     }
 
-    // Retrieve orders from localStorage (if available)
-    const storedOrders = JSON.parse(localStorage.getItem('orders'));
+    // Retrieve orders from sessionStorage (if available)
+    const storedOrders = JSON.parse(sessionStorage.getItem('orders')) || [];
     console.log('Stored Orders:', storedOrders);
-    if (storedOrders){
       setOrdersFromLocalStorage(storedOrders);
-    }
-  },[]);
+  },[dispatch]);
 
 
   // Handle input changes
@@ -68,20 +64,18 @@ const ProfileManager = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     /* console.log('Profile updated:', profile); */
-    localStorage.setItem('userProfile',JSON.stringify(profile));
-    /* console.log(profile); */
+    sessionStorage.setItem('userProfile',JSON.stringify(profile));
     setIsEditing(false);
   };
 
   const logout = (e) =>{
     alert('Logging out');
-    localStorage.removeItem("userProfile");
-    localStorage.removeItem("shoppingCart");
-    localStorage.removeItem("orders");
-    localStorage.removeItem("isLoggedIn");
+    sessionStorage.removeItem("userProfile");
+    sessionStorage.removeItem("shoppingCart");
+    sessionStorage.removeItem("orders");
+    sessionStorage.removeItem("isLoggedIn");
     dispatch(clearCart());
     navigate("/");
-    /* window.location.reload(); */
   }
 
   /* const handlePlaceOrder = () => {
@@ -96,9 +90,9 @@ const ProfileManager = () => {
       dispatch(placeOrder(newOrder));
       dispatch(clearCart());
       
-      // Update the localStorage with the new orders
+      // Update the sessionStorage with the new orders
       const updatedOrders = [...orders, newOrder];
-      localStorage.setItem('orders', JSON.stringify(updatedOrders));
+      sessionStorage.setItem('orders', JSON.stringify(updatedOrders));
       setOrdersFromLocalStorage(updatedOrders);
       console.log(updatedOrders);
       
@@ -121,23 +115,23 @@ const ProfileManager = () => {
         setIsEditing(true);
         break;
       case 'orders':
-        /* handlePlaceOrder(); */
         setIsEditing(false);
-        break; // No action needed here, orders will be displayed below
+        break; 
       case 'logout':
         logout();
         break;
       default:
-        setIsEditing(false); // Reset to default state if no valid action
+        setIsEditing(false);
         break;
     }
   };
+  const userProfile = JSON.parse(sessionStorage.getItem('userProfile'));
 
   return (
-    <>
+    <div className='profile_container'>
     {!isLoggedIn && <LoginDialog open={openLoginDialog} setOpen={setOpenLoginDialog} />}
     <div className="profilePage">
-      <h2>Profile</h2>
+      <div className='profile_heading'><h2>Profile:</h2><h3>{userProfile.name}</h3></div>
       
       {/* Dropdown Menu */}
      <div>
@@ -227,6 +221,8 @@ const ProfileManager = () => {
                   <p>Order ID: {order.orderId}</p>
                   <p>Order Date: {order.date}</p>
                   {console.log('Order Items:', order.items)}
+                  {console.log(ordersFromLocalStorage)
+                  }
                   <ul>
                   {Array.isArray(order.items) && order.items.length > 0 ? (
                         order.items.map((item, index) => (
@@ -260,7 +256,7 @@ const ProfileManager = () => {
         <button onClick={handlePlaceOrder}>Place Order</button>
       )} */}
     </div>
-    </>
+    </div>
   );
 };
 

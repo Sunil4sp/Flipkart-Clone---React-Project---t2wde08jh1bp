@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Getting cart data from localStorage
+// Getting cart data from sessionStorage
 const getLocalOrdersData = () => {
-  const localData = localStorage.getItem("orders");
+  const localData = sessionStorage.getItem("orders");
   if (!localData) return [];
   try {
     const parsedData = JSON.parse(localData);
@@ -14,7 +14,7 @@ const getLocalOrdersData = () => {
 
 // Initial state for orders slice
 const initialState = {
-  orders: getLocalOrdersData(), // Retrieve any previous orders from localStorage
+  orders: getLocalOrdersData(), // Retrieve any previous orders from sessionStorage
   orderCount: 0,
   orderHistory: [],
 };
@@ -33,9 +33,9 @@ export const orderSlice = createSlice({
         orderDate: new Date().toLocaleString(), // Store the date when the order was placed
       };
 
-      // Save the new order to the state and localStorage
+      // Save the new order to the state and sessionStorage
       state.orders.push(newOrder);
-      localStorage.setItem("orders", JSON.stringify(state.orders));
+      sessionStorage.setItem("orders", JSON.stringify(state.orders));
       state.orderCount += 1;
     },
 
@@ -47,13 +47,13 @@ export const orderSlice = createSlice({
     clearOrders: (state) => {
       // Optionally clear all orders
       state.orders = [];
-      localStorage.removeItem("orders"); // Clear the orders from localStorage
+      sessionStorage.removeItem("orders"); // Clear the orders from sessionStorage
     },
 
     clearOrderById: (state, action) => {
       // Remove a specific order by ID
       state.orders = state.orders.filter(order => order.orderId !== action.payload);
-      localStorage.setItem("orders", JSON.stringify(state.orders));
+      sessionStorage.setItem("orders", JSON.stringify(state.orders));
     },
   },
 });

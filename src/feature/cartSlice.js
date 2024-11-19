@@ -4,7 +4,7 @@ import productData from "../data/allProductData";
 //Getting cartdata form localstorage
 const getLocalCartData = () => {
 
-  const localData = localStorage.getItem("shoppingCart");
+  const localData = sessionStorage.getItem("shoppingCart");
   if (!localData) return [];
   try {
     const parsedData = JSON.parse(localData);
@@ -70,9 +70,6 @@ export const cartSlice = createSlice({
         return newCart;
       }, []);
     },
-    /* setLoginStatus: (state, action) => {
-      state.isLoggedIn = action.payload; // Set the login status
-    }, */
     clearCart: (state) => {
       state.cart = []; // Clear the cart
     },

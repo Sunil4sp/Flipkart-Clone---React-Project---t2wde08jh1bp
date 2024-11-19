@@ -22,7 +22,7 @@ const Home = () => {
   /* console.log(isLoggedIn); */
 
   useEffect(() => {
-    const storedLoginStatus = JSON.parse(localStorage.getItem('isLoggedIn'));
+    const storedLoginStatus = JSON.parse(sessionStorage.getItem('isLoggedIn'));
     console.log(storedLoginStatus);
     
     if (storedLoginStatus) {
@@ -39,12 +39,12 @@ const Home = () => {
     dispatch(setLoginStatus(true));
     setOpenLogin(false);
     /* console.log(setOpenLogin, isLoggedIn); */
-    localStorage.setItem('isLoggedIn', JSON.stringify(true));
+    sessionStorage.setItem('isLoggedIn', JSON.stringify(true));
   };
 
   const handleLogout = () => {
     dispatch(setLoginStatus(false));
-    localStorage.removeItem('isLoggedIn'); // Remove login status from localStorage
+    sessionStorage.removeItem('isLoggedIn'); // Remove login status from sessionStorage
   };
 
   return (

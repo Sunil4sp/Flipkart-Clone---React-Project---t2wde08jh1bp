@@ -1,4 +1,3 @@
-
 import { Typography, Box, styled } from '@mui/material';
 
 const Component = styled(Box)`
