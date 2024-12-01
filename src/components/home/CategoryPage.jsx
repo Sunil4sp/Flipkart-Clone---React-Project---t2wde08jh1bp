@@ -11,39 +11,11 @@ const CategoryPage = () => {
   let [tempCategoryProducts, setProducts] = useState([]);
   const dispatch = useDispatch();
 
-  /* useEffect(() => {
-    try{
-    // Check if the lowercase category is valid
-    if ((validCategories.includes(lowercaseCategory))/* || (fashion.includes(lowercaseCategory))*/ /*) {
-      const callApi = async (category) => {
-        const response = await fetch */ /* (`https://dummyjson.com/products/category/${lowercaseCategory}`); */ /*(`https://fakestoreapi.com/products/category/${lowercaseCategory}`);
-        /* if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        console.log(data);
-        setProducts(data);
-        console.log('API Response:', tempCategoryProducts);
-      };
-      callApi(lowercaseCategory);
-    } 
-    else 
-    {
-      console.error('Invalid category:', lowercaseCategory);
-    }
-  } catch (error){
-      console.error('Error fetching data:', error);
-    }
-  }, [lowercaseCategory, tempCategoryProducts]); */
-
-  /* useEffect(() => {
-    console.log('Updated tempCategoryProducts:', tempCategoryProducts);
-  }, [tempCategoryProducts]); */
-
   const callApi = async (lowercaseCategory) => {
     try{
     const response = await fetch (`https://dummyjson.com/products/category/${lowercaseCategory}`); /* (`https://fakestoreapi.com/products/category/${lowercaseCategory}`); */
     const data = await response.json();
+
     if (data && data.products && Array.isArray(data.products)) {
       setProducts(data.products);
       } else{
@@ -55,7 +27,9 @@ const CategoryPage = () => {
   };
 
   useEffect(() => {
+    if(lowercaseCategory){
     callApi(lowercaseCategory);
+    }
   }, [lowercaseCategory]);
 
   const handleAddToCart = (item) =>{

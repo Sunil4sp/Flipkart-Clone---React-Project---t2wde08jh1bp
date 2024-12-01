@@ -245,7 +245,14 @@
 
 .flex-item-edit p{
   display: flex;
-  padding: none;
+}
+
+.flex-item-edit strong{
+  padding-right: 10px;
+}
+
+.flex-item-edit-div{
+  padding: 5px;
 }
 
 .profile_heading{

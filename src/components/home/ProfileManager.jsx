@@ -13,10 +13,9 @@ const ProfileManager = () => {
     name: '',
     email: '',
     phone: '',
-    /* address: '' */
   });
   
-  const address = useSelector((state) => state.user.address);
+  /* const address = useSelector((state) => state.user.address); */
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [isEditing, setIsEditing] = useState(false);
@@ -123,7 +122,7 @@ const ProfileManager = () => {
         <form onSubmit={handleSubmit} className='flex-container'>
           <div className='flex-item'>
             <div className='flex-smallColumn'>
-              <label>Name:</label></div>
+              <label className='label-'>Name:</label></div>
               <div className='flex-bigColumn'><input
                 type="text"
                 name="name"
@@ -173,15 +172,24 @@ const ProfileManager = () => {
         </form>
       ) : (
         <div className='flex-item-edit'>
-          <p>
+          <div className='flex-item-edit-div'>
+            <p>
             <strong>Name:</strong> {profile.name}
           </p>
-          <p>
+          </div>
+          
+          <div className='flex-item-edit-div'>
+            <p>
             <strong>Email:</strong> {profile.email}
           </p>
-          <p>
+          </div>
+          
+          <div className='flex-item-edit-div'>
+            <p>
             <strong>Phone Number:</strong> {profile.phone}
           </p>
+          </div>
+          
           {/* <button onClick={() => setIsEditing(true)}>Edit Profile</button> */}
         </div>
       )}
@@ -201,10 +209,7 @@ const ProfileManager = () => {
                 <tr key={order.orderId} className='table_row'>
                   <td className='table_data'>{order.orderId}</td>
                   <td className='table_data'>{order.date}</td>
-                  {/* {console.log('Order Items:', order.items)}
-                  {console.log(ordersFromLocalStorage)
-                  } */}
-                  {/* <table className='orders_itemDetails'> */}
+                  
                   {Array.isArray(order.items) && order.items.length > 0 ? (
                         order.items.map((item, index) => ( 
                           <tr key={index}>
@@ -214,7 +219,7 @@ const ProfileManager = () => {
                       ) : (
                         <p>No items in this order</p>
                       )}
-                    {/* </table> */}
+                    
                   </tr>
                 ))}
                     

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate} from 'react-router-dom';
 import { setLoginStatus, setUserDetails } from "../../feature/userSlice";
 import {
   Dialog,
@@ -92,14 +93,6 @@ const LoginDialog = (props) => {
   const dispatch = useDispatch();
   const [account, toggleAccount] = useState(accountInitialValues.login);
 
-  const handleClose = () => {
-    props.setOpen(false);
-    toggleAccount(accountInitialValues.login);
-  };
-  const toggleSignup = () => {
-    toggleAccount(accountInitialValues.signup);
-  };
-
   const [userProfile, setUserProfile] = useState({
     name: '',
     email: '',
@@ -109,9 +102,30 @@ const LoginDialog = (props) => {
   });
 
   const [isLoginStatus, setIsLoginStatus] = useState(isLoggedIn);
-
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+
+  // Check if user is logged in or not on mount
+  useEffect(() => {
+    const storedProfile = JSON.parse(sessionStorage.getItem('userProfile'));
+    const storedLoginStatus = JSON.parse(sessionStorage.getItem('isLoggedIn'));
+
+    if (!storedLoginStatus && !storedProfile) {
+      // If not logged in and no profile in sessionStorage, show signup
+      toggleAccount(accountInitialValues.signup);
+    } else {
+      // If logged in or profile exists, show login
+      toggleAccount(accountInitialValues.login);
+    }
+  }, []);
+
+  const handleClose = () => {
+    props.setOpen(false);
+    toggleAccount(accountInitialValues.login);
+  };
+  const toggleSignup = () => {
+    toggleAccount(accountInitialValues.signup);
+  };
 
   const handleSignup = () => {
     
@@ -133,14 +147,13 @@ const LoginDialog = (props) => {
       dispatch(setUserDetails(profileData));
       
       const loginStatusData = isLoginStatus;
-      console.log(loginStatusData);
       
       sessionStorage.setItem("isLoggedIn", JSON.stringify(loginStatusData));
       dispatch(setLoginStatus(loginStatusData));
       
       alert("Account created successfully, Login now");
-      // window.location.reload();
-      handleClose();
+      /* handleClose(); */
+      props.setOpen(true);
     } else {
       alert("All fields are required");
     }
@@ -149,9 +162,8 @@ const LoginDialog = (props) => {
   const handleLogin = () => {
     const storedProfile = JSON.parse(sessionStorage.getItem('userProfile'));
     const storedLoginStatus = JSON.parse(sessionStorage.getItem('isLoggedIn'));
-    /* console.log(storedLoginStatus); */
-    const loginStatusData = !storedLoginStatus;
-    console.log(loginStatusData);
+    /* console.log(storedLoginStatus); 
+    console.log(loginStatusData);*/
     
     if (
       storedProfile && 
@@ -160,8 +172,9 @@ const LoginDialog = (props) => {
       ) {
         
       dispatch(setUserDetails(storedProfile));
-      dispatch(setLoginStatus(loginStatusData));
+      const loginStatusData = !storedLoginStatus;
       sessionStorage.setItem('isLoggedIn', JSON.stringify(loginStatusData));
+      dispatch(setLoginStatus(loginStatusData));
       console.log(loginStatusData);
       
       alert("Welcome back, Logged In successfully");
@@ -169,12 +182,10 @@ const LoginDialog = (props) => {
     } 
     else {
       const timeOut = setTimeout(()=>{
-        /* navigate('/signup'); */
         alert("Enter valid credential or Signup again");
       },1000);
       
       return () => clearTimeout(timeOut);
-      
     }
   };
 
@@ -218,7 +229,7 @@ const LoginDialog = (props) => {
               {/* <RequestOTP>Request OTP</RequestOTP> */}
               <Typography style={{ textAlign: "center" }}>New to ShopNow | Signup?</Typography>
               <CreateAccount onClick={toggleSignup}>
-                 {/* <br></br> */}Create an account
+                 {/* <br></br> */}Create an account 
               </CreateAccount>
             </Wrapper>
           ) : (
@@ -254,9 +265,9 @@ const LoginDialog = (props) => {
                 name="phone"
                 label="Enter Phone"
               />
-              <LoginButton onClick={handleSignup}>Continue</LoginButton>
-            </Wrapper>
-          )}
+              <LoginButton onClick={handleSignup}>Submit</LoginButton>
+            </Wrapper> )
+        }
         </Box>
       </Component>
     </Dialog>

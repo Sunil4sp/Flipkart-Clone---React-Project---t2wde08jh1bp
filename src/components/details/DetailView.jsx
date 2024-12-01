@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux';
 const Component = styled(Box)`
     margin-top: 55px;
     // background: #F2F2F2;
-    
 `;
 
 const Container = styled(Grid)(({ theme }) => ({
@@ -47,8 +46,6 @@ const DetailView = () => {
     useEffect(() => {
         console.log("itemData in DetailView:", itemData);
     }, [itemData]);
-        /* setItemData(items[fetchId.id]);
-    }, [items,fetchId]); */
 
     return (
         <Component>
