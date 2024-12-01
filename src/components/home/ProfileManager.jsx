@@ -78,31 +78,6 @@ const ProfileManager = () => {
     navigate("/");
   }
 
-  /* const handlePlaceOrder = () => {
-    if (cart.length > 0) {
-      const newOrder = {
-        orderId: Date.now(), // Generate a unique order ID based on timestamp
-        items: cart, // Store the cart items as part of the order
-        date: new Date().toLocaleString(), // Save the order date
-      };
-
-      // Dispatch the action to save the order in the store
-      dispatch(placeOrder(newOrder));
-      dispatch(clearCart());
-      
-      // Update the sessionStorage with the new orders
-      const updatedOrders = [...orders, newOrder];
-      sessionStorage.setItem('orders', JSON.stringify(updatedOrders));
-      setOrdersFromLocalStorage(updatedOrders);
-      console.log(updatedOrders);
-      
-
-      // Redirect or show confirmation message
-      alert('Your order has been placed!');
-    } else {
-      alert('Your cart is empty!');
-    }
-  }; */
 
   // Handle action selection from dropdown
   const handleActionChange = (e) => {
@@ -131,11 +106,11 @@ const ProfileManager = () => {
     <div className='profile_container'>
     {!isLoggedIn && <LoginDialog open={openLoginDialog} setOpen={setOpenLoginDialog} />}
     <div className="profilePage">
-      <div className='profile_heading'><h2>Profile:</h2><h3>{userProfile.name}</h3></div>
+      <div className='profile_heading'><h2 className='h2'>Profile:</h2>{isLoggedIn ? <h3>{ userProfile.name}</h3> : ""}</div>
       
       {/* Dropdown Menu */}
-     <div>
-        <select onChange={handleActionChange} value={selectedAction}>
+     <div className='select_div'>
+        <select onChange={handleActionChange} value={selectedAction} className='select_tag'>
           <option defaultValue="">Select an action</option>
           <option value="edit">Edit Profile</option>
           <option value="orders">Your Orders</option>
@@ -212,49 +187,44 @@ const ProfileManager = () => {
       )}
       {/* Orders Section */}
       {selectedAction === 'orders' && (
-        <div>
-          <h3>Your Orders</h3>
+        <div className='orders_div'>
+          <div>
+          <h3 className='orders_h3'>Your Orders</h3>
           {ordersFromLocalStorage && ordersFromLocalStorage.length > 0 ? (
-            <ul>
+            <table className='orders_table'>
+              <tr>
+                <th className='table_heading'>ORDER ID</th><th className='table_heading'>ORDER DATE</th>
+                <tr>
+                <th className='table_heading-item'>ITEM NAME</th><th className='table_heading-price'>PRICE</th> </tr>
+              </tr>
               {ordersFromLocalStorage.map((order) => (
-                <li key={order.orderId}>
-                  <p>Order ID: {order.orderId}</p>
-                  <p>Order Date: {order.date}</p>
-                  {console.log('Order Items:', order.items)}
+                <tr key={order.orderId} className='table_row'>
+                  <td className='table_data'>{order.orderId}</td>
+                  <td className='table_data'>{order.date}</td>
+                  {/* {console.log('Order Items:', order.items)}
                   {console.log(ordersFromLocalStorage)
-                  }
-                  <ul>
+                  } */}
+                  {/* <table className='orders_itemDetails'> */}
                   {Array.isArray(order.items) && order.items.length > 0 ? (
-                        order.items.map((item, index) => (
-                          <li key={index}>
-                            <p>{item.title} - ₹ {Math.round(30 * item.price - 50)}</p>
-                          </li>
+                        order.items.map((item, index) => ( 
+                          <tr key={index}>
+                            <td className='table_data_2'>{item.title}</td><td className='table_data_3'> ₹ {Math.round(30 * item.price - 50)}</td>
+                          </tr>
                         ))
                       ) : (
                         <p>No items in this order</p>
                       )}
-                    </ul>
-                  </li>
+                    {/* </table> */}
+                  </tr>
                 ))}
-                    {/* {order.items.map((item, index) => (
-                      <li key={index}>
-                        <p>{item.title} - ₹ {Math.round(30 * item.price-50)}</p>
-                      </li>
-                    ))} 
-                  </ul>
-                </li>
-              ))}*/}
-            </ul>
+                    
+            </table>
           ) : (
             <p>No orders yet.</p>
           )}
+          </div>
         </div>
       )}
-
-      {/* Cart to Orders button */}
-     {/*  {cart.length > 0 && !isEditing && selectedAction === 'orders' && (
-        <button onClick={handlePlaceOrder}>Place Order</button>
-      )} */}
     </div>
     </div>
   );

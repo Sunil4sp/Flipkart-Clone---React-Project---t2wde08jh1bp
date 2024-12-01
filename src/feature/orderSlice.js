@@ -35,7 +35,7 @@ export const orderSlice = createSlice({
 
       // Save the new order to the state and sessionStorage
       state.orders.push(newOrder);
-      sessionStorage.setItem("orders", JSON.stringify(state.orders));
+      /* sessionStorage.setItem("orders", JSON.stringify(state.orders)); */
       state.orderCount += 1;
     },
 

@@ -1,13 +1,14 @@
 import { Box, Typography, Button, Grid, styled } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { setLoginStatus } from "../../feature/userSlice";
-import { getCartTotal } from "../../feature/cartSlice"; 
+/* import { getCartTotal } from "../../feature/cartSlice";  */
 import { placeOrder } from "../../feature/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem";
 import EmptyCart from "./EmptyCart";
 import TotalView from "./TotalView";
+import LoginPromptDialog from "../login/LoginPromptDialog";
 import LoginDialog from "../login/LoginDialog";
 
 const Component = styled(Grid)(({ theme }) => ({
@@ -52,26 +53,12 @@ const Cart = () => {
   const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false); 
 
-  /* seEffect(() => {
-   if (cart.length > 0) {
-    sessionStorage.setItem('shoppingCart', JSON.stringify(cart));
-    
-   }
-  }, [cart]);
+  const [openLoginPromptDialog, setOpenLoginPromptDialog] = useState(false); 
+  const [showLoginDialog, setShowLoginDialog] = useState(false);
+  
 
-  useEffect(() => {
-    const storedCart = JSON.parse(sessionStorage.getItem('shoppingCart'));
-    if (storedCart) {
-      // Dispatch to set the cart state from sessionStorage
-      dispatch({ type: 'cart', payload: storedCart });
-    }
-    // Recalculate cart totals
-    dispatch(getCartTotal());
-  }, [dispatch]); */
-
-  useEffect(() => {
+  /* useEffect(() => {
     // Check if cart exists in sessionStorage and log its contents for debugging
     const storedCart = sessionStorage.getItem('shoppingCart');
     console.log("Stored Cart:", storedCart); // Debugging log
@@ -84,7 +71,8 @@ const Cart = () => {
 
         // Only dispatch if parsedCart is an array
         if (Array.isArray(parsedCart)) {
-          dispatch({ type: 'cart', payload: parsedCart });
+          /* console.log(parsedCart); */
+        /*  dispatch({ type: 'cart', payload: parsedCart });
         } else {
           console.error("Stored cart is not an array");
         }
@@ -95,13 +83,18 @@ const Cart = () => {
       console.log("No items found in sessionStorage for cart");
     } */
 
-    dispatch(getCartTotal()); // Recalculate cart totals
-  }, [dispatch]);
-
-  const handleLogin = () =>{
-    dispatch(setLoginStatus(true));
-    setOpen(false);
-  }
+    /*dispatch(getCartTotal()); // Recalculate cart totals
+  }, [dispatch]); */
+  
+    const handleLogin = () =>{
+      if(isLoggedIn){
+        dispatch(setLoginStatus(true));
+        /* setOpen(false); */
+      } else{
+        setOpenLoginPromptDialog(false);
+        setShowLoginDialog(true);
+      }
+    }
   
   const handlePlaceOrder = () => {
     if (isLoggedIn ) {
@@ -112,20 +105,21 @@ const Cart = () => {
         date: new Date().toLocaleString(), // Order date
         status: "Shipped", // Set the order status to Shipped
       };
-      
-      const storedOrders = JSON.parse(sessionStorage.getItem("orders")) || [];
+
+      dispatch(placeOrder(newOrder));
+
+        const storedOrders = JSON.parse(sessionStorage.getItem('orders')) || [];
+        console.log(storedOrders);
         storedOrders.push(newOrder);
         console.log(storedOrders);
         sessionStorage.setItem("orders", JSON.stringify(storedOrders));
-        dispatch(placeOrder(newOrder));
     
       setTimeout(()=>{
         navigate('/shipping');
       },1000);
-      /* sessionStorage.removeItem('shoppingCart'); 
-      return () => clearTimeout(timeOut);*/
     } else {
-      setOpen(true);
+      /* setOpen(true); */
+      setOpenLoginPromptDialog(true);
     }
   };
 
@@ -152,16 +146,18 @@ const Cart = () => {
               ))}
             </div>
             <BottomWrapper>
-              {isLoggedIn ? (
+              {/* {isLoggedIn ? ( */}
               <StyledButton onClick={handlePlaceOrder} variant="contained">
                 Place Order
               </StyledButton>
-              ) :(
-              <Typography variant="body2" color="error">
-                {alert("Please log in to place an order.")}
-                <LoginDialog open={open} setOpen={setOpen} onLogin= {handleLogin}/>
-              </Typography>
-            )}
+              {/* ) :( */}
+                <>
+              {/* <Typography variant="body2" color="error">
+                {alert("Please log in to place an order.")} */}
+        
+                </>
+              {/* /* </Typography> */ }
+           {/*  )} */}
             </BottomWrapper>
           </LeftComponent>
           <Grid item lg={3} md={3} sm={12} xs={12}>
@@ -177,6 +173,16 @@ const Cart = () => {
           <EmptyCart />
         </>
       )}
+      <LoginPromptDialog open={openLoginPromptDialog} 
+        setOpen={setOpenLoginPromptDialog} 
+        setShowLoginDialog={setShowLoginDialog} 
+        onLogin={handleLogin} />
+
+      {/*{open  openLoginDialog } setOpen=/*{setOpen  setOpenLoginDialog }*/  /* onLogin={handleLogin}  />*/}
+      {/* <LoginDialog open={open} setOpen={setOpen} onLogin= {handleLogin}/> */}
+      {showLoginDialog &&
+        <LoginDialog open={showLoginDialog} setOpen={setShowLoginDialog} />
+      }
     </>
   );
 };

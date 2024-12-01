@@ -53,7 +53,7 @@ const Home = () => {
       <LoginDialog open={openLogin} setOpen={setOpenLogin} onLogin= {handleLogin}/>
     )} 
 
-    {isLoggedIn && ( 
+    {/* {isLoggedIn && (  */}
       <>
       <Header />
       <NavBar onLogout={handleLogout} />
@@ -64,7 +64,7 @@ const Home = () => {
         <Slide title="Season's Top Pick" timer={false} autoPlay={false}  />
       </Component>
       </> 
-      )}
+      {/* )} */}
     </>
     
   )

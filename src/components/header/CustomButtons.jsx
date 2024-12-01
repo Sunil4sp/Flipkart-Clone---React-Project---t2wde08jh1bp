@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import '../../App.css';
 import LoginDialog from '../login/LoginDialog';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoginStatus } from "../../feature/userSlice";
+/* import { setLoginStatus } from "../../feature/userSlice"; */
 import { getCartTotal } from '../../feature/cartSlice';
 import ProfileManager from '../home/ProfileManager';
 

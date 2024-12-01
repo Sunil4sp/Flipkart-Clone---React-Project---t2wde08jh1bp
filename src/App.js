@@ -3,16 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import '../src/App.css';
 import { Box } from '@mui/material';
 import Context from "./context/Context";
-import Header from './components/header/Header';
-/*import Home from './components/home/Home';
-import Cart from './components/cart/Cart';
-import DetailView from './components/details/DetailView';
-import Shipping from "./components/shipping/Shipping";
-/* import CategoryPage from "./components/home/CategoryPage"; 
-import ProfileManager from "./components/home/ProfileManager";*/
 
 //=======================================function starts=======================================
 const CategoryPage = lazy(() =>import('./components/home/CategoryPage'));
+const Header = lazy(() =>import('./components/header/Header'));
 const Home = lazy(() =>import('./components/home/Home'));
 const ProfileManager = lazy(() => import('./components/home/ProfileManager'));
 const DetailView = lazy(() => import('./components/details/DetailView'));

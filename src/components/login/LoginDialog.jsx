@@ -138,7 +138,7 @@ const LoginDialog = (props) => {
       sessionStorage.setItem("isLoggedIn", JSON.stringify(loginStatusData));
       dispatch(setLoginStatus(loginStatusData));
       
-      alert("Account created successfuly");
+      alert("Account created successfully, Login now");
       // window.location.reload();
       handleClose();
     } else {
