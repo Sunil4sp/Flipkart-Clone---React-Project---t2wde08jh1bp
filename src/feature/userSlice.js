@@ -19,6 +19,7 @@ const initialState = {
     userName: "",
     email: "",
     address: "",
+    addressStatus: false,
     isLoggedIn: false, // To track login status
   };
 
@@ -34,11 +35,11 @@ export const userSlice = createSlice ({
         state.email = email;
         },
         setLoginStatus: (state, action) => {
-            /* const { isLoggedIn } = action.payload; */
             state.isLoggedIn = action.payload; // Set login status
         },
         setAddressDetails: (state, action) =>{
             state.address = action.payload;
+            state.addressStatus = action.payload;
         },
         clearUserDetails: (state) => {
         state.name = "";

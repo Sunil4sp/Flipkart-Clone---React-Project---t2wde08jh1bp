@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { setLoginStatus } from "../../feature/userSlice";
 /* import { getCartTotal } from "../../feature/cartSlice";  */
 import { placeOrder } from "../../feature/orderSlice";
+import { setAddressDetails } from "../../feature/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem";
@@ -50,46 +51,18 @@ const StyledButton = styled(Button)`
 
 const Cart = () => {
   const { cart, totalPrice, totalQuantity } = useSelector((state) => state.cart);
-  const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
+  const addressStatus = useSelector((state) => state.user);
+  const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn') || false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [openLoginPromptDialog, setOpenLoginPromptDialog] = useState(false); 
   const [showLoginDialog, setShowLoginDialog] = useState(false);
-  
-
-  /* useEffect(() => {
-    // Check if cart exists in sessionStorage and log its contents for debugging
-    const storedCart = sessionStorage.getItem('shoppingCart');
-    console.log("Stored Cart:", storedCart); // Debugging log
-
-    if (storedCart) {
-      try {
-        // Parse the cart from sessionStorage
-        const parsedCart = JSON.parse(storedCart);
-        console.log("Parsed Cart:", parsedCart); // Debugging log
-
-        // Only dispatch if parsedCart is an array
-        if (Array.isArray(parsedCart)) {
-          /* console.log(parsedCart); */
-        /*  dispatch({ type: 'cart', payload: parsedCart });
-        } else {
-          console.error("Stored cart is not an array");
-        }
-      } catch (error) {
-        console.error("Error parsing stored cart:", error);
-      }
-    } /* else {
-      console.log("No items found in sessionStorage for cart");
-    } */
-
-    /*dispatch(getCartTotal()); // Recalculate cart totals
-  }, [dispatch]); */
+  const [showAddressStatus, setShowAddressStatus] = useState(addressStatus);
   
     const handleLogin = () =>{
       if(isLoggedIn){
         dispatch(setLoginStatus(true));
-        /* setOpen(false); */
       } else{
         setOpenLoginPromptDialog(false);
         setShowLoginDialog(true);
@@ -97,12 +70,13 @@ const Cart = () => {
     }
   
   const handlePlaceOrder = () => {
-    if (isLoggedIn ) {
+    if (isLoggedIn && showAddressStatus) {  
       // Create a new order with cart data
+
       const newOrder = {
         orderId: Date.now(), // Unique order ID
         items: cart, // Cart items
-        date: new Date().toLocaleString(), // Order date
+        date: new Date().toLocaleString('en-IN'), // Order date
         status: "Shipped", // Set the order status to Shipped
       };
 
@@ -146,18 +120,11 @@ const Cart = () => {
               ))}
             </div>
             <BottomWrapper>
-              {/* {isLoggedIn ? ( */}
+              
               <StyledButton onClick={handlePlaceOrder} variant="contained">
                 Place Order
               </StyledButton>
-              {/* ) :( */}
-                <>
-              {/* <Typography variant="body2" color="error">
-                {alert("Please log in to place an order.")} */}
-        
-                </>
-              {/* /* </Typography> */ }
-           {/*  )} */}
+              
             </BottomWrapper>
           </LeftComponent>
           <Grid item lg={3} md={3} sm={12} xs={12}>
@@ -178,8 +145,6 @@ const Cart = () => {
         setShowLoginDialog={setShowLoginDialog} 
         onLogin={handleLogin} />
 
-      {/*{open  openLoginDialog } setOpen=/*{setOpen  setOpenLoginDialog }*/  /* onLogin={handleLogin}  />*/}
-      {/* <LoginDialog open={open} setOpen={setOpen} onLogin= {handleLogin}/> */}
       {showLoginDialog &&
         <LoginDialog open={showLoginDialog} setOpen={setShowLoginDialog} />
       }

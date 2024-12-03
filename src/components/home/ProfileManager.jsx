@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearCart } from '../../feature/cartSlice';
 import LoginDialog from '../login/LoginDialog';
 import '../../App.css';
+import { setAddressDetails } from '../../feature/userSlice';
 
 const ProfileManager = () => {
   // State to manage user profile data
@@ -15,7 +16,7 @@ const ProfileManager = () => {
     phone: '',
   });
   
-  /* const address = useSelector((state) => state.user.address); */
+  const address = useSelector((state) => state.user.address);
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [isEditing, setIsEditing] = useState(false);
@@ -24,6 +25,18 @@ const ProfileManager = () => {
   const [selectedAction, setSelectedAction] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [captureAddress, setCaptureAddress] = useState(false);
+  const [isEditingAddress, setIsEditingAddress] = useState(false);
+  const [text, setText] = useState(address || '');
+  
+  const userAddress = () =>{
+    sessionStorage.setItem("address", text);
+    dispatch(setAddressDetails(text));  // Dispatch the address to Redux
+    setCaptureAddress(false);  // Close the address form
+  }
+  const handleEdit = () => {
+    setIsEditingAddress(true); // Enable editing mode
+  };
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -35,6 +48,11 @@ const ProfileManager = () => {
     const storedProfile = JSON.parse(sessionStorage.getItem('userProfile'));
     if(storedProfile){
       setProfile(storedProfile)
+    }
+
+    const storedAddress = sessionStorage.getItem('address');
+    if (storedAddress) {
+      setText(storedAddress); // Set the address from sessionStorage when the component loads
     }
 
     const storedCart = JSON.parse(sessionStorage.getItem('shoppingCart'));
@@ -73,10 +91,10 @@ const ProfileManager = () => {
     sessionStorage.removeItem("shoppingCart");
     sessionStorage.removeItem("orders");
     sessionStorage.removeItem("isLoggedIn");
+    sessionStorage.removeItem("address");
     dispatch(clearCart());
     navigate("/");
   }
-
 
   // Handle action selection from dropdown
   const handleActionChange = (e) => {
@@ -87,10 +105,17 @@ const ProfileManager = () => {
     switch (selectedValue) {
       case 'edit':
         setIsEditing(true);
+        setCaptureAddress(false);
         break;
       case 'orders':
         setIsEditing(false);
-        break; 
+        setCaptureAddress(false);
+        break;
+      case 'address':
+        setCaptureAddress(true);
+        setIsEditing(false);
+        setIsEditingAddress(false);
+        break;   
       case 'logout':
         logout();
         break;
@@ -113,6 +138,7 @@ const ProfileManager = () => {
           <option defaultValue="">Select an action</option>
           <option value="edit">Edit Profile</option>
           <option value="orders">Your Orders</option>
+          <option value="address">Your Address</option>
           <option value="logout">Logout</option>
         </select>
       </div>
@@ -230,6 +256,27 @@ const ProfileManager = () => {
           </div>
         </div>
       )}
+      {
+        captureAddress && <div className='address-div'>
+          <label>Address</label>
+          <textarea
+                name="address"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                placeholder='Enter Address'
+                disabled={!isEditingAddress}
+              />
+              <div className='address-buttons'>
+                {isEditingAddress ? (
+                <button type="submit" onClick={userAddress}>Save</button> ) : (
+                <button type='button' onClick={handleEdit}>Edit</button>
+                )}
+                <button type='button' onClick={() => setCaptureAddress(false)}
+                  style={{ marginLeft: '10px' }}>Cancel</button>
+              </div>
+              
+        </div>
+      }
     </div>
     </div>
   );

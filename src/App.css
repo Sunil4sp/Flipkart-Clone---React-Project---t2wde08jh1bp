@@ -328,3 +328,28 @@
   padding: 10px;
   width: 50px;
 }
+
+.address-div{
+  display: flex;
+  font-weight: 700;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.address-div label, textarea{
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.address-div textarea{
+  padding-left: 10px;
+}
+
+.address-buttons{
+  display: flex;
+  padding: 10px;
+  justify-content: space-evenly;
+}
+.address-buttons button{
+  padding: 8px;
+  border-radius: 5px;
+}
