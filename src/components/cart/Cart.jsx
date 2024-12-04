@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { setLoginStatus } from "../../feature/userSlice";
 /* import { getCartTotal } from "../../feature/cartSlice";  */
 import { placeOrder } from "../../feature/orderSlice";
-import { setAddressDetails } from "../../feature/userSlice";
+/* import { setAddressDetails } from "../../feature/userSlice"; */
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem";
@@ -88,9 +88,9 @@ const Cart = () => {
         console.log(storedOrders);
         sessionStorage.setItem("orders", JSON.stringify(storedOrders));
     
-      setTimeout(()=>{
+      /* setTimeout(()=>{ */
         navigate('/shipping');
-      },1000);
+      /* },1000); */
     } else {
       /* setOpen(true); */
       setOpenLoginPromptDialog(true);

@@ -22,12 +22,14 @@ const ProfileManager = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [cartData, setCartData] = useState([]);
   const [ordersFromLocalStorage, setOrdersFromLocalStorage] = useState([]);
+  /* const [addressFromSessionStorage, setAddressFromSessionStorage] = useState(address); */
   const [selectedAction, setSelectedAction] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [captureAddress, setCaptureAddress] = useState(false);
   const [isEditingAddress, setIsEditingAddress] = useState(false);
   const [text, setText] = useState(address || '');
+  const storedAddress = sessionStorage.getItem('address');
   
   const userAddress = () =>{
     sessionStorage.setItem("address", text);
@@ -50,7 +52,9 @@ const ProfileManager = () => {
       setProfile(storedProfile)
     }
 
-    const storedAddress = sessionStorage.getItem('address');
+    /* const storedAddress = sessionStorage.getItem('address'); 
+    console.log(storedAddress);*/
+    
     if (storedAddress) {
       setText(storedAddress); // Set the address from sessionStorage when the component loads
     }
@@ -63,7 +67,7 @@ const ProfileManager = () => {
 
     // Retrieve orders from sessionStorage (if available)
     const storedOrders = JSON.parse(sessionStorage.getItem('orders')) || [];
-    console.log('Stored Orders:', storedOrders);
+    /* console.log('Stored Orders:', storedOrders); */
       setOrdersFromLocalStorage(storedOrders);
   },[dispatch]);
 
@@ -226,20 +230,30 @@ const ProfileManager = () => {
           <h3 className='orders_h3'>Your Orders</h3>
           {ordersFromLocalStorage && ordersFromLocalStorage.length > 0 ? (
             <table className='orders_table'>
+              <thead>
               <tr>
-                <th className='table_heading'>ORDER ID</th><th className='table_heading'>ORDER DATE</th>
+                <th className='table_heading'>Order_ID</th>
+                <th className='table_heading'>Order_Date</th>
+                <th className='table_heading'>Order Address</th>
                 <tr>
-                <th className='table_heading-item'>ITEM NAME</th><th className='table_heading-price'>PRICE</th> </tr>
+                <th className='table_heading-item'>Order_Item_Name</th>
+                <th className='table_heading-price'>PRICE</th> </tr>
               </tr>
+              </thead>
+              <tbody>
               {ordersFromLocalStorage.map((order) => (
                 <tr key={order.orderId} className='table_row'>
                   <td className='table_data'>{order.orderId}</td>
                   <td className='table_data'>{order.date}</td>
                   
+                  {/* {addressFromSessionStorage.map((addr) => ( */}
+                    <td className='table_data'>{storedAddress || 'No Address Provided'}</td>
+                  {/* ))} */}
                   {Array.isArray(order.items) && order.items.length > 0 ? (
                         order.items.map((item, index) => ( 
                           <tr key={index}>
-                            <td className='table_data_2'>{item.title}</td><td className='table_data_3'> ₹ {Math.round(30 * item.price - 50)}</td>
+                            <td className='table_data_2'>{item.title}</td>
+                            <td className='table_data_3'> ₹ {Math.round(30 * item.price - 50)}</td>
                           </tr>
                         ))
                       ) : (
@@ -248,7 +262,7 @@ const ProfileManager = () => {
                     
                   </tr>
                 ))}
-                    
+              </tbody>      
             </table>
           ) : (
             <p>No orders yet.</p>

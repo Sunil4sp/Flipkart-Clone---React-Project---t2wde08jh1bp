@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate} from 'react-router-dom';
+/* import { useNavigate} from 'react-router-dom'; */
 import { setLoginStatus, setUserDetails } from "../../feature/userSlice";
 import {
   Dialog,
@@ -150,9 +150,8 @@ const LoginDialog = (props) => {
       
       sessionStorage.setItem("isLoggedIn", JSON.stringify(loginStatusData));
       dispatch(setLoginStatus(loginStatusData));
-      
       alert("Account created successfully, Login now");
-      /* handleClose(); */
+      handleClose();
       props.setOpen(true);
     } else {
       alert("All fields are required");
